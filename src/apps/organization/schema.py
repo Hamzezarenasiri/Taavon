@@ -25,12 +25,6 @@ class OrganizationUserSchema(BaseSchema):
     mobile_number: Optional[PhoneStr]
     telephone: Optional[PhoneStr]
     email: Optional[EmailStr]
-    taking_position_date: Optional[date]
-
-    # pylint: disable=no-self-argument,no-self-use
-    @validator("taking_position_date")
-    def isoformat_time(cls, value: date) -> str:
-        return value.isoformat() if value else None
 
 
 class OrganizationUserSchemaIn(BaseSchema):
@@ -41,12 +35,6 @@ class OrganizationUserSchemaIn(BaseSchema):
     mobile_number: Optional[PhoneStr]
     telephone: Optional[PhoneStr]
     email: Optional[EmailStr]
-    taking_position_date: Optional[date]
-
-    # pylint: disable=no-self-argument,no-self-use
-    @validator("taking_position_date")
-    def isoformat_time(cls, value: date) -> str:
-        return value.isoformat() if value else None
 
     @validator("user_id")
     @classmethod
@@ -72,9 +60,6 @@ class OrganizationUserSchemaIn(BaseSchema):
             values["mobile_number"] = user.get("mobile_number")
             values["telephone"] = user.get("telephone") or values["telephone"]
             values["email"] = user.get("email")
-            values["taking_position_date"] = (
-                user.get("taking_position_date") or values["taking_position_date"]
-            )
         return values
 
 

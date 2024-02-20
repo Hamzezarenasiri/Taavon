@@ -64,7 +64,6 @@ class BaseUserSchema(BaseSchema):
     organization_id: Optional[SchemaID] = None
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
     username: UsernameField
-    taking_position_date: Optional[date]
 
     @validator("mobile_number")
     @classmethod
@@ -200,7 +199,6 @@ class UsersGetUserSubListOut(BaseUserSchema):
     login_type: Optional[LoginType]
     national_code: Optional[IranNationalCodeStr]
     organization_name: Optional[str]
-    position_in_organization: Optional[str]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]] = []
     user_status: Optional[UserStatus]
     user_type: Optional[UserType]
@@ -229,7 +227,6 @@ class UsersUpdateIn(BaseSchema):
     password: Optional[PasswordField]
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
-    position_in_organization: Optional[str]
     organization_id: Optional[SchemaID] = None
     organization_name: Optional[str]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]]
@@ -257,7 +254,6 @@ class UsersUpdateAdminUserIn(BaseSchema):
     password: Optional[PasswordField]
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
-    position_in_organization: Optional[str]
     settings: Optional[UserSettingsSchema]
     telephone: Optional[PhoneStr]
     user_status: Optional[UserStatus]
@@ -275,7 +271,6 @@ class ProfileUpdateMeIn(BaseSchema):
     national_code: Optional[IranNationalCodeStr]
     settings: Optional[UserSettingsSchema]
     telephone: Optional[PhoneStr]
-    position_in_organization: Optional[str]
 
     @validator("mobile_number")
     @classmethod
@@ -310,7 +305,6 @@ class ProfileGetMeAgg(BaseSchema):
     login_type: Optional[LoginType]
     mobile_number: Optional[PhoneStr] = Field(example="+989123456789")
     national_code: Optional[IranNationalCodeStr] = Field(example="hNzrH4'7<-")
-    position_in_organization: Optional[str]
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
     settings: UserSettingsSchema | None
     telephone: Optional[PhoneStr]

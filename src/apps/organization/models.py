@@ -20,12 +20,6 @@ class OrganizationUserModel(BaseModel):
     mobile_number: Optional[PhoneStr]
     telephone: Optional[PhoneStr]
     email: Optional[EmailStr]
-    taking_position_date: Optional[date]
-
-    # pylint: disable=no-self-argument,no-self-use
-    @validator("taking_position_date")
-    def isoformat_time(cls, value: date) -> str:
-        return value.isoformat() if value else None
 
     class Config:
         arbitrary_types_allowed = True

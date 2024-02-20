@@ -459,12 +459,6 @@ async def import_csv(
                         "state_id": state.id,
                     }
                 )
-        ceo_taking_position_date = datetime.strptime(
-            dict_item.get("ceo.taking_position_date"), "%Y/%m/%d"
-        )
-        cio_taking_position_date = datetime.strptime(
-            dict_item.get("cio.taking_position_date"), "%Y/%m/%d"
-        )
         dict_item["state"] = StateSchemaIn(name=state.name, state_id=state.id)
         dict_item["city"] = CitySchemaIn(name=city.name, city_id=city.id)
         new_data = organization_schema.OrganizationUpdateIn(
@@ -476,11 +470,6 @@ async def import_csv(
                 national_code=dict_item.get("ceo.national_code"),
                 mobile_number=dict_item.get("ceo.mobile_number"),
                 telephone=dict_item.get("ceo.telephone"),
-                taking_position_date=JalaliDateTime(
-                    ceo_taking_position_date.year,
-                    ceo_taking_position_date.month,
-                    ceo_taking_position_date.day,
-                ).to_gregorian(),
             ),
             cio=OrganizationUserSchema(
                 first_name=ar_to_fa(dict_item.get("cio.first_name")),
@@ -489,11 +478,6 @@ async def import_csv(
                 national_code=dict_item.get("cio.national_code"),
                 mobile_number=dict_item.get("cio.mobile_number"),
                 telephone=dict_item.get("cio.telephone"),
-                taking_position_date=JalaliDateTime(
-                    cio_taking_position_date.year,
-                    cio_taking_position_date.month,
-                    cio_taking_position_date.day,
-                ).to_gregorian(),
             ),
             address=AddressSchemaIn(
                 address_line_1=dict_item.get("address_line_1"),

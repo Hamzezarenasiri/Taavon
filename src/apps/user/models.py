@@ -76,21 +76,14 @@ class User(Document):
     organization_name: Optional[str]
     permissions: Optional[List[PermissionModel]] = []
     phone_verified: Optional[bool] = False
-    position_in_organization: Optional[str]
     roles: List[Union[str, DefaultRoleNameEnum]]
     settings: Optional[UserSettings]
-    taking_position_date: Optional[date]
     telephone: Optional[PhoneStr]
     update_datetime: Optional[datetime]
     user_status: Optional[UserStatus] = UserStatus.just_added.value
     user_type: Optional[UserType]
     username: Indexed(UsernameField, unique=True)
     organization_ids: list[DB_ID] = Field([])
-
-    # pylint: disable=no-self-argument,no-self-use
-    @validator("taking_position_date")
-    def isoformat_taking_position_date(cls, value: date) -> str:
-        return value.isoformat() if value else None
 
     @validator("email")
     @classmethod
