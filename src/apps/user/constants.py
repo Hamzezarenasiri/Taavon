@@ -101,8 +101,8 @@ ALL_Address_Types = [i.value for i in AddressType.__members__.values()]
 
 
 class DefaultRoleNameEnum(str, Enum):
-    super_admin: str = "راهبر اصلی"
-    admin: str = "راهبر فنی"
+    super_admin: str = "super_admin"
+    admin: str = "admin"
     user: str = "user"
 
 

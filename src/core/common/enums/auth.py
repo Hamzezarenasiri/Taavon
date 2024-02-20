@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class RoleEnum(str, Enum):
-    super_admin: str = "راهبر اصلی"
-    admin: str = "راهبر فنی"
+    super_admin: str = "super_admin"
+    admin: str = "admin"
     user: str = "user"
 
 

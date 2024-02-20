@@ -16,7 +16,7 @@ all_users = [
         "hashed_password": str(
             user_password.get_password_hash(app_settings.DEFAULT_PASSWORD)
         ),
-        "roles": ["راهبر اصلی"],
+        "roles": ["super_admin"],
         "phone_verified": True,
         "email_verified": True,
         "national_code": "1111111111",
