@@ -1,0 +1,32 @@
+# ============ REQUIRED ============
+DB_URI=mongodb://tanha:tanha1ubuntu@mongodb:27017
+JWT_SECRET_KEY=qvHMJ/hx7HsfGNTfA2cRZf29nGK+jpiUS87GH6AhtB1fsXG8SYCFSWJ18nPcKTdm
+CACHE_HOST=redis
+CACHE_PORT=6379
+DB_DATABASE_NAME=Taavon
+PROJECT_NAME='Vira Taavon'
+PROJECT_SERVERS=[{"url": "http://localhost:8000"},{"url": "https://taavon-api.virapayesh.ir"},{"url": "http://37.32.24.36:8000"}]
+CRYPTO_KEY='Bhetarin_Key'
+# ============ FILE_PATHS ============
+FILES_DEFAULT_MEDIA_PATH=app/media
+
+#=============================   GOOGLE     =============================
+GOOGLE_CLIENT_ID=395365840836-rv6eqh098te9h8c4pg9o5fjg8i7oev5n.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=hLhWlRLwVSZryj-K_mXuy8-t
+
+#=============================   TEST    =============================
+TEST_MODE=false
+TEST_DEFAULT_EMAIL=hamzezn@gmail.com
+TEST_DEFAULT_PHONE=+989336958986
+
+JWT_ACCESS_TOKEN_LIFETIME_SECONDS=333600
+JWT_REFRESH_TOKEN_LIFETIME_SECONDS=3336000
+
+#=============================    CR    =============================
+CR_BASED='registry.gitlab.com/virarayandp'
+CR_REPOSITOY_NAME='Taavon_backend'
+CR_DEPLOY_TAG='latest'
+
+#MONGODB_VERSION='4.4.17'
+MONGODB_VERSION='latest'
+REDIS_VERSION='latest'

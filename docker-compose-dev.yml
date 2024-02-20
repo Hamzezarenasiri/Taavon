@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  redis:
+    container_name: redis
+    image: redis:${REDIS_VERSION}
+#    sysctls:
+#      - vm.overcommit_memory=1
+    restart: always
+#    ports:
+#      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+#    volumes:
+#      - cache:/data
+    networks:
+      - taavon_net
+  mongodb:
+    image: mongo:${MONGODB_VERSION}
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: tanha
+      MONGO_INITDB_ROOT_PASSWORD: tanha1ubuntu
+    ports:
+      - "27017:27017"
+    volumes:
+      - /home/DBs/MongoDB:/data/db
+    networks:
+      - taavon_net
+  app:
+    build:
+      context: .
+#    image: ${CR_BASED}/${CR_REPOSITOY_NAME}:${CR_DEPLOY_TAG}
+    container_name: taavon
+    command: uvicorn --host 0.0.0.0 --port 8000 src.main.main:app --reload
+    hostname: vira
+    ports:
+      - "8080:8000"
+    restart: on-failure:5
+#    env_file:
+#      - .env
+    volumes:
+      - .:/var/www
+#     - ~/media:/var/www/media
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      - DB_URI=${DB_URI}
+      - JWT_SECRET_KEY=${DB_URI}
+      - CACHE_HOST=${CACHE_HOST}
+      - DB_DATABASE_NAME=${DB_DATABASE_NAME}
+      - CACHE_PORT=${CACHE_PORT}
+      - TEST_MODE=${TEST_MODE}
+      - CRYPTO_KEY=${CRYPTO_KEY}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - TEST_DEFAULT_EMAIL=${TEST_DEFAULT_EMAIL}
+      - TEST_DEFAULT_PHONE=${TEST_DEFAULT_PHONE}
+      - JWT_ACCESS_TOKEN_LIFETIME_SECONDS=${JWT_ACCESS_TOKEN_LIFETIME_SECONDS}
+      - JWT_REFRESH_TOKEN_LIFETIME_SECONDS=${JWT_REFRESH_TOKEN_LIFETIME_SECONDS}
+      - PROJECT_SERVERS=${PROJECT_SERVERS}
+    networks:
+      - taavon_net
+
+networks:
+  taavon_net:
+    driver: bridge

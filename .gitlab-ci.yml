@@ -1,0 +1,25 @@
+before_script:
+  - echo "Hello World!"
+
+variables:
+  CR_BASED: registry.gitlab.com/virarayandp
+  CR_REPOSITOY_NAME: Taavon_backend
+  CR_DEPLOY_TAG: latest
+
+stages:          # List of stages for jobs, and their order of execution
+  - deploy
+
+deploy-job:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  tags:
+    - dev
+  script:
+    - echo "Deploying application..."
+    - docker build --rm -t ${CR_BASED}/${CR_REPOSITOY_NAME}:${CR_DEPLOY_TAG} .
+    - docker push ${CR_BASED}/${CR_REPOSITOY_NAME}:${CR_DEPLOY_TAG}
+    - docker compose down --remove-orphans
+    - docker compose pull
+    - docker compose up -d
+    - echo "Application successfully deployed."
+  only:
+    - main

@@ -1,0 +1,28 @@
+configs = {
+    "auto_confirmation": True,
+    "is_deleted": False,
+    "is_enabled": True,
+    "other_configs": {},
+    "office_address": {
+        "location": {
+            "coordinates": [25.11812, 55.20058],
+            "type": "Point",
+        },
+        "first_name": "The Vira PRODUCT",
+        "last_name": "--------",
+        "country_code": "IR",
+        "phone_number": "+97144570397",
+        "alternate_phone_number": "+97144570397",
+        "street": "-------",
+        "address_line_1": "---",
+        "address_line_2": "---",
+        "state": "-",
+        "city": "-",
+        "postal_code": None,
+        "type": None,
+        "landmark": None,
+        "address_name": "----",
+        "building_name": "-----",
+        "area": "---",
+    },
+}

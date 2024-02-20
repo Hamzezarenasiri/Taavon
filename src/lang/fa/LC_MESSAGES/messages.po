@@ -1,0 +1,326 @@
+# Persian translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-09-15 01:00+0330\n"
+"PO-Revision-Date: 2023-09-15 01:29+0330\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fa\n"
+"Language-Team: fa <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+msgid "Can not perform this action"
+msgstr "امکان انجام این کار وجود ندارد"
+
+msgid "Hello World"
+msgstr "سلام دنیا"
+
+msgid "Login username password"
+msgstr "ورود با نام کاربری و گذرواژه عبور"
+
+msgid "Register user"
+msgstr "ثبت نام کاربر"
+
+msgid "Otp request"
+msgstr "درخواست کد OTP"
+
+msgid "Logout user"
+msgstr "خروج کاربر"
+
+msgid "Google login"
+msgstr "ورود با گوگل"
+
+msgid "Facebook login"
+msgstr "ورود با فیس بوک"
+
+msgid "Refresh token"
+msgstr "تجدید توکن"
+
+msgid "Changed password"
+msgstr "گذرواژه عبور تغییر یافت"
+
+msgid "Changed password failed"
+msgstr "تغییر گذرواژه عبور ناموفق بود"
+
+msgid "Otp verify limited"
+msgstr "تایید کد OTP محدود است"
+
+msgid "Failed password changed unsuccessful"
+msgstr "تغییر گذرواژه عبور ناموفق بود"
+
+msgid "User already exists with this email"
+msgstr "کاربری با این رایانشانی قبلا ثبت نام کرده است"
+
+msgid "User already exists with this phone"
+msgstr "کاربری با این شماره تلفن قبلا ثبت نام کرده است"
+
+msgid "Social login failed"
+msgstr "ورود با شبکه های اجتماعی ناموفق بود"
+
+msgid "Current date is not between user start date and end date"
+msgstr "تاریخ فعلی بین تاریخ شروع و پایان کاربر نیست"
+
+msgid "The specified user is blocked"
+msgstr "کاربر مورد نظر مسدود شده است"
+
+msgid "Permission denied"
+msgstr "اجازه رد شد"
+
+msgid "You must login again"
+msgstr "شما باید دوباره وارد شوید"
+
+msgid "User not found"
+msgstr "کاربر یافت نشد"
+
+msgid "Otp expired or invalid"
+msgstr "کد OTP منقضی شده یا نامعتبر است"
+
+msgid "Invalid password"
+msgstr "گذرواژه عبور نامعتبر است"
+
+msgid "Create new role"
+msgstr "ایجاد نقش جدید"
+
+msgid "Get roles"
+msgstr "دریافت نقش ها"
+
+msgid "Get single role"
+msgstr "دریافت نقش"
+
+msgid "Update role"
+msgstr "به روزرسانی نقش"
+
+msgid "Roles have user"
+msgstr "این نقش به کاربری اختصاص داده شده است"
+
+msgid "Create new entity"
+msgstr "ایجاد شی جدید"
+
+msgid "Get entities"
+msgstr "دریافت شی ها"
+
+msgid "Get single entity"
+msgstr "دریافت شی"
+
+msgid "Update entity"
+msgstr "به روزرسانی شی"
+
+msgid "Bulk update entities"
+msgstr "به روزرسانی انبوه شی ها"
+
+msgid "Config not found"
+msgstr "تنظیمات یافت نشد"
+
+msgid "Please insert config record into database"
+msgstr "لطفاٌ رکورد تنظیمات را در پایگاه داده وارد کنید"
+
+msgid "Filesize is too large"
+msgstr "حجم فایل بیش از حد بزرگ است"
+
+msgid "Provided file format is not supported"
+msgstr "فرمت فایل پشتیبانی نمی شود"
+
+msgid "Service is not available"
+msgstr "سرویس در دسترس نیست"
+
+msgid "File not found"
+msgstr "فایل یافت نشد"
+
+msgid "File is used in an other entity"
+msgstr "این فایل در یک شی دیگر استفاده شده است"
+
+msgid "Create new notification"
+msgstr "ایجاد اعلان جدید"
+
+msgid "Get notifications"
+msgstr "دریافت اعلان ها"
+
+msgid "Get single notification"
+msgstr "دریافت اعلان"
+
+msgid "Update notification"
+msgstr "به روزرسانی اعلان"
+
+msgid "Notification not found"
+msgstr "اعلان یافت نشد"
+
+msgid "Can't be recursive (parent)"
+msgstr "هیچ سازمانی نمی تواند خود را به عنوان والد خود انتخاب کند"
+
+msgid "Organization has child"
+msgstr "این سازمان دارای زیرمجموعه است"
+
+msgid "Invalid city_id. City not found"
+msgstr "شناسه شهر نامعتبر است. شهر یافت نشد"
+
+msgid "Invalid state_id. State not found"
+msgstr "شناسه استان نامعتبر است. استان یافت نشد"
+
+msgid "Invalid parent. Organization not found"
+msgstr "والد نامعتبر است. سازمان یافت نشد"
+
+msgid "Invalid user_id. User not found"
+msgstr "شناسه کاربر نامعتبر است. کاربر یافت نشد"
+
+msgid "Create new organization"
+msgstr "ایجاد سازمان جدید"
+
+msgid "Get organizations"
+msgstr "دریافت سازمان ها"
+
+msgid "Get single organization"
+msgstr "دریافت سازمان"
+
+msgid "Update organization"
+msgstr "به روزرسانی سازمان"
+
+msgid "Organization not found"
+msgstr "سازمان یافت نشد"
+
+msgid "Parent organization not found"
+msgstr "سازمان والد یافت نشد"
+
+msgid "Create new organization level"
+msgstr "ایجاد سطح سازمان جدید"
+
+msgid "Get organization levels"
+msgstr "دریافت سطوح سازمان"
+
+msgid "Get single organization level"
+msgstr "دریافت سطح سازمان"
+
+msgid "Update organization level"
+msgstr "به روزرسانی سطح سازمان"
+
+msgid "Organization level not found"
+msgstr "سطح سازمان یافت نشد"
+
+msgid "Parent organization level not found"
+msgstr "سطح سازمان والد یافت نشد"
+
+msgid "Create new organization position"
+msgstr "ایجاد موقعیت سازمان جدید"
+
+msgid "Get organization positions"
+msgstr "دریافت موقعیت های سازمان"
+
+msgid "Get single organization position"
+msgstr "دریافت موقعیت سازمان"
+
+msgid "Update organization position"
+msgstr "به روزرسانی موقعیت سازمان"
+
+msgid "Organization position not found"
+msgstr "موقعیت سازمان یافت نشد"
+
+msgid "Parent organization position not found"
+msgstr "موقعیت سازمان والد یافت نشد"
+
+msgid "User not found or disabled"
+msgstr "کاربر یافت نشد یا غیرفعال است"
+
+msgid "Your account is blocked. Please contact administrator"
+msgstr "حساب کاربری شما مسدود شده است. لطفاٌ با مدیر تماس بگیرید"
+
+msgid "Your account status is pending. Please contact administrator"
+msgstr "وضعیت حساب کاربری شما در انتظار است. لطفاٌ با مدیر تماس بگیرید"
+
+msgid "Your account status is rejected. Please contact administrator"
+msgstr "وضعیت حساب کاربری شما رد شده است. لطفاٌ با مدیر تماس بگیرید"
+
+msgid "Your account is disabled. Please contact administrator"
+msgstr "حساب کاربری شما غیرفعال شده است. لطفاٌ با مدیر تماس بگیرید"
+
+msgid "Can't perform this action"
+msgstr "امکان انجام این کار وجود ندارد"
+
+msgid "Phone not verified"
+msgstr "شماره تلفن تایید نشده است"
+
+msgid "Email not verified"
+msgstr "رایانشانی تایید نشده است"
+
+msgid "Invalid organization_id. Organization not found"
+msgstr "شناسه سازمان نامعتبر است. سازمان یافت نشد"
+
+msgid "Invalid organization level. Organization level not found"
+msgstr "سطح سازمانی نامعتبر است. سطح سازمانی یافت نشد"
+
+msgid "Invalid position in organization. Position not found"
+msgstr "موقعیت سازمانی نامعتبر است. موقعیت یافت نشد"
+
+msgid "Success password changed successfully"
+msgstr "گذرواژه عبور با موفقیت تغییر یافت"
+
+msgid "Register new user and sent otp"
+msgstr "ثبت نام کاربر جدید و ارسال کد OTP"
+
+msgid "Address ids not found"
+msgstr "شناسه های آدرس یافت نشد"
+
+msgid "Google code not valid"
+msgstr "کد گوگل معتبر نیست"
+
+msgid "Add new device"
+msgstr "افزودن دستگاه جدید"
+
+msgid "Internal server error try again later"
+msgstr "خطای داخلی سرور. لطفاٌ بعدا امتحان کنید"
+
+msgid "Delete failed"
+msgstr "حذف ناموفق"
+
+msgid "Update failed"
+msgstr "به روزرسانی ناموفق"
+
+msgid "Limited token"
+msgstr "توکن محدود"
+
+msgid "Your session has expired please login again"
+msgstr "نشست شما منقضی شده است. لطفاٌ دوباره وارد شوید"
+
+msgid "Invalid temp token please login again"
+msgstr "توکن موقت نامعتبر است. لطفاٌ دوباره وارد شوید"
+
+msgid "Access token expired"
+msgstr "توکن دسترسی منقضی شده است"
+
+msgid "Refresh token expired"
+msgstr "توکن رفرش منقضی شده است"
+
+msgid "Forbidden action."
+msgstr "عمل غیر مجاز."
+
+msgid "User is not allowed to perform this action."
+msgstr "کاربر مجاز به انجام این کار نیست."
+
+msgid "Access denied"
+msgstr "دسترسی رد شده"
+
+msgid "Not found"
+msgstr "پیدا نشد"
+
+msgid "Duplicated entry"
+msgstr "ورودی تکراری"
+
+msgid "File size is too large"
+msgstr "حجم فایل بیش از حد بزرگ است"
+
+msgid "Old password not match"
+msgstr "گذرواژه عبور قدیمی مطابقت ندارد"
+
+msgid "Data validation error occurred."
+msgstr "خطای اعتبارسنجی داده رخ داده است."
+
+msgid "field %(key)s duplicated"
+msgstr "فیلد %(key)s از قبل موجود است و نمی توانید فیلد تکراری وارد کنید"
+
