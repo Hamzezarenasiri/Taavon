@@ -58,7 +58,7 @@ class AuthChangedPasswordMessageOut(Message):
 class AuthRegisterIn(BaseSchema, UsernameSchema):
     first_name: Optional[str]
     last_name: Optional[str]
-    username: str = Field(example="+989123456789")
+    username: str = Field(example="+989167076478")
     password: PasswordField = Field(example="hNzrH4'7<-")
     gender: Optional[GenderEnum]
 

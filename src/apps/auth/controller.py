@@ -15,7 +15,6 @@ from src.core import otp, token
 from src.core.base.controller import BaseController
 from src.core.base.schema import PaginatedResponse
 from src.core.common import exceptions
-from src.core.common.enums import RoleEnum
 from src.core.common.models.security import UsernamePasswordSchema
 from src.core.common.models.token import AuthToken, RefreshRequest
 from src.core.mixins import Message, SchemaID
@@ -39,12 +38,7 @@ from .schema import AuthUsernamePasswordIn
 from ..user.constants import UserStatus, LoginType
 from ..user.exceptions import (
     UserIsDisabled,
-    UserIsBlocked,
-    UserIsPending,
-    UserIsRejected,
     GoogleCodeNotValid,
-    UserEmailNotVerified,
-    UserPhoneNotVerified,
 )
 
 
@@ -193,7 +187,7 @@ class AuthController(object):
         ):
             raise OTPExpiredOrInvalid
         new_doc = {
-            "login_datetime": datetime.utcnow(),
+            "login_datetime": datetime.now(timezone.utc),
             "last_login_datetime": user.login_datetime,
             "login_count": user.login_count + 1,
         }

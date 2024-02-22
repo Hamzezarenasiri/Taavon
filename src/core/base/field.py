@@ -64,7 +64,7 @@ class PhoneStr(str):
     def __modify_schema__(cls, field_schema):
         field_schema.update(
             type="string",
-            example="+989123456789",
+            example="+989167076478",
         )
 
 

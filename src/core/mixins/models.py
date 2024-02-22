@@ -14,7 +14,7 @@ USERNAME_IS_EMAIL: str = "email"
 
 
 class UsernameSchema(BaseModel):
-    username: str = Field(example="+989123456789")
+    username: str = Field(example="+989167076478")
 
     # pylint: disable=no-self-argument,no-self-use
     @validator("username")

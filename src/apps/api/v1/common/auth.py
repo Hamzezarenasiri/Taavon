@@ -54,29 +54,29 @@ async def otp_request(
     return Response(detail=result_detail.detail, message=AuthMessageEnum.otp_request)
 
 
-@auth_router.post(
-    "/otp/send-verification-request",
-    description="username( `email` or `mobile_number`)\n\n"
-    "if entered username is `phone` >> `sms` otp to entered phone\n\n"
-    "By `Hamze.zn`",
-    responses={
-        **response_404,
-        **response_500,
-    },
-    # response_model=Response,
-)
-@return_on_failure
-async def otp_verification_request(
-    background_tasks: BackgroundTasks,
-    payload: auth_schema.AuthUserForgetOtpReqIn,
-):
-    result_detail = await auth_controller.otp_request(
-        request_payload=payload,
-        background_tasks=background_tasks,
-        request_type=OtpRequestType.verification,
-    )
-
-    return Response(detail=result_detail.detail, message=AuthMessageEnum.otp_request)
+# @auth_router.post(
+#     "/otp/send-verification-request",
+#     description="username( `email` or `mobile_number`)\n\n"
+#     "if entered username is `phone` >> `sms` otp to entered phone\n\n"
+#     "By `Hamze.zn`",
+#     responses={
+#         **response_404,
+#         **response_500,
+#     },
+#     # response_model=Response,
+# )
+# @return_on_failure
+# async def otp_verification_request(
+#     background_tasks: BackgroundTasks,
+#     payload: auth_schema.AuthUserForgetOtpReqIn,
+# ):
+#     result_detail = await auth_controller.otp_request(
+#         request_payload=payload,
+#         background_tasks=background_tasks,
+#         request_type=OtpRequestType.verification,
+#     )
+#
+#     return Response(detail=result_detail.detail, message=AuthMessageEnum.otp_request)
 
 
 @auth_router.post(

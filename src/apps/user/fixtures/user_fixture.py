@@ -7,11 +7,11 @@ all_users = [
     {
         "_id": ObjectId("0123456789abcdef01234567"),
         "is_blocked": False,
-        "is_deleted": {"$ne": True},
+        "is_deleted": False,
         "is_enabled": True,
         "is_force_change_password": False,
         "is_force_login": False,
-        "mobile_number": "+989123456789",
+        "mobile_number": "+989167076478",
         "email": "admin@email.com",
         "hashed_password": str(
             user_password.get_password_hash(app_settings.DEFAULT_PASSWORD)

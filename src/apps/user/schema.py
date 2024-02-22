@@ -54,7 +54,7 @@ class BaseUserSchema(BaseSchema):
     first_name: Optional[str] = Field(example="John")
     is_enabled: Optional[bool] = True
     last_name: Optional[str] = Field(example="Doe")
-    mobile_number: Optional[PhoneStr] = Field(example="+989123456789")
+    mobile_number: Optional[PhoneStr] = Field(example="+989167076478")
     organization_id: Optional[SchemaID] = None
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
     username: UsernameField
@@ -111,7 +111,7 @@ class UsersCreateIn(BaseUserSchema):
     # is_blocked: Optional[bool] = False
     first_name: str = Field(example="John")
     last_name: str = Field(example="Doe")
-    mobile_number: PhoneStr = Field(example="+989123456789")
+    mobile_number: PhoneStr = Field(example="+989167076478")
     national_code: IranNationalCodeStr
     password: PasswordField
     permissions: Optional[List[PermissionModel]]
@@ -215,7 +215,7 @@ class UsersUpdateIn(BaseSchema):
     is_force_change_password: Optional[bool]
     is_force_login: Optional[bool]
     last_name: Optional[str] = Field(example="Doe")
-    mobile_number: Optional[PhoneStr] = Field(example="+989123456789")
+    mobile_number: Optional[PhoneStr] = Field(example="+989167076478")
     national_code: Optional[IranNationalCodeStr]
     password: Optional[PasswordField]
     permissions: Optional[List[PermissionModel]]
@@ -296,7 +296,7 @@ class ProfileGetMeAgg(BaseSchema):
     last_login_datetime: Optional[datetime]
     last_name: Optional[str] = Field(example="Doe")
     login_datetime: Optional[datetime]
-    mobile_number: Optional[PhoneStr] = Field(example="+989123456789")
+    mobile_number: Optional[PhoneStr] = Field(example="+989167076478")
     national_code: Optional[IranNationalCodeStr] = Field(example="hNzrH4'7<-")
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
     user_status: Optional[UserStatus]
