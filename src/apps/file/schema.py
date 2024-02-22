@@ -57,17 +57,17 @@ class FileUploadDataIn(BaseSchema):
 
 
 class FileCreateOut(FileBaseSchema):
-    id: SchemaID = Field(alias="_id")
+    id: SchemaID
     user_id: SchemaID
-    create_datetime: datetime
+    # create_datetime: datetime
     # file_category: Optional[FileCategoryEnum]
 
 
 class FileUpdateOut(FileBaseSchema):
-    id: SchemaID = Field(alias="_id")
+    id: SchemaID
     user_id: SchemaID
-    create_datetime: datetime
-    update_datetime: Optional[datetime]
+    # create_datetime: datetime
+    # update_datetime: Optional[datetime]
     # file_category: Optional[FileCategoryEnum]
 
 
@@ -79,13 +79,13 @@ class FileUpdateIn(BaseSchema):
 class FileGetListOut(FileBaseSchema):
     id: SchemaID
     user_id: SchemaID
-    create_datetime: datetime
-    update_datetime: Optional[datetime]
+    # create_datetime: datetime
+    # update_datetime: Optional[datetime]
     # file_category: Optional[FileCategoryEnum]
 
 
 class FileGetOut(BaseSchema):
-    id: SchemaID = Field(alias="_id")
+    id: SchemaID
     alt: Optional[str]
     file_url: Optional[str]
     thumbnail_url: Optional[str]

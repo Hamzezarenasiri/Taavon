@@ -43,13 +43,13 @@ entity = collections_names.FILE
 @return_on_failure
 async def upload_file(
     background_tasks: BackgroundTasks,
-    payload: Optional[str] = Body(
-        default=None,
-        example={
-            "alt": {"EN": "string"},
-            # "file_category": "product",
-        },
-    ),
+    # payload: Optional[str] = Body(
+    #     default=None,
+    #     example={
+    #         "alt": {"EN": "string"},
+    #         # "file_category": "product",
+    #     },
+    # ),
     file=Depends(file_validation),
     current_user: User = Security(
         get_current_user,
@@ -57,14 +57,14 @@ async def upload_file(
     ),
 ) -> Response[file_schema.FileCreateOut]:
     path = app_settings.DEFAULT_FILES_PATH
-    meta_fields = (
-        file_schema.FileUploadDataIn(**json.loads(payload)) if payload else None
-    )
+    # meta_fields = (
+    #     file_schema.FileUploadDataIn(**json.loads(payload)) if payload else None
+    # )
     result = await file_controller.upload_file(
         file=file,
         path=path,
         current_user=current_user,
-        meta_fields=meta_fields,
+        # meta_fields=meta_fields,
         background_tasks=background_tasks,
     )
     return Response[file_schema.FileCreateOut](data=result)

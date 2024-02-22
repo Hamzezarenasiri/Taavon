@@ -25,7 +25,7 @@ admin_router.include_router(city_router, prefix="/cities", tags=["Cities"])
 # admin_router.include_router(category_router, prefix="/categories", tags=["Categories"])
 admin_router.include_router(dashboard_router, prefix="/dashboard", tags=["Dashboard"])
 # admin_router.include_router(config_router, prefix="/configs")
-# admin_router.include_router(file_router, prefix="/files")
+admin_router.include_router(file_router, prefix="/files", tags=["Files"])
 # admin_router.include_router(notification_router, prefix="/notifications")
 admin_router.include_router(entity_router, prefix="/entities", tags=["Entities"])
 

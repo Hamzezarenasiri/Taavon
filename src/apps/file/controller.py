@@ -31,7 +31,7 @@ class FileController(BaseController):
     ) -> file_schema.FileOut:
         """Receive a file object and the path then save it on server"""
 
-        uploaded_file = await self.crud.save_file_meta(
+        return await files_crud.save_file_meta(
             file=file,
             path=path,
             user_id=current_user.id if current_user else guest_id,
@@ -39,7 +39,6 @@ class FileController(BaseController):
             file_id=file_id,
             background_tasks=background_tasks,
         )
-        return uploaded_file
 
     async def update_file_meta(
         self,
@@ -101,14 +100,22 @@ class FileController(BaseController):
             criteria = {}
         if search:
             search = ar_to_fa(search)
-            criteria.update({"file_name": {"$regex": ".*" + search + ".*"}})
-        paginated_files_list = await pagination.paginate(
+            criteria.update({"file_name": {"$regex": f".*{search}.*"}})
+        pipeline = [
+            {"$match": criteria},
+            {
+                "$addFields": {
+                    "id": "$_id",
+                }
+            },
+        ]
+        return await pagination.paginate(
             crud=self.crud,
             list_item_model=file_schema.FileGetListOut,
-            criteria=criteria,
+            # criteria=criteria,
+            pipeline=pipeline,
             _sort=await ordering.get_ordering_criteria(),
         )
-        return paginated_files_list
 
 
 file_controller = FileController(
