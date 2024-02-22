@@ -35,9 +35,15 @@ class AuthUserForgetOtpReqIn(UsernameSchema, BaseSchema):
 
 
 class AuthUserChangePasswordIn(BaseSchema):
-    old_password: Optional[PasswordField] = Field(
+    old_password: PasswordField = Field(
         min_length=8, max_length=100, example="hNzrH4'7<-"
     )
+    new_password: PasswordField = Field(
+        min_length=8, max_length=100, example="hNzrH4'7<-"
+    )
+
+
+class AuthResetPasswordIn(BaseSchema):
     new_password: PasswordField = Field(
         min_length=8, max_length=100, example="hNzrH4'7<-"
     )

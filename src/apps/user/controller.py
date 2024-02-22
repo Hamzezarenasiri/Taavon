@@ -13,6 +13,7 @@ from pymongo.errors import DuplicateKeyError
 from src.apps.auth.exceptions import (
     OldPasswordNotMatch,
     UserRegisterPhoneExists,
+    InvalidTempToken,
 )
 from src.apps.auth.schema import (
     AuthChangedPasswordErrorMessageOut,
@@ -93,11 +94,42 @@ class UserController(BaseController):
             return user_obj
         return None
 
-    async def change_password(
+    async def reset_forgot_password(
         self,
         verification: AuthUserChangePasswordIn,
         current_user: User,
         is_limited: bool,
+    ) -> Tuple[
+        Union[AuthUserResetPasswordOut, AuthChangedPasswordErrorMessageOut],
+        bool,
+    ]:
+        if not is_limited:
+            raise InvalidTempToken
+        if await self.set_password(
+            user_id=current_user.id,
+            new_password=verification.new_password,
+        ):
+            await User.find_one({"_id": current_user.id}).set(
+                {
+                    User.login_datetime: datetime.now(timezone.utc),
+                    User.last_login_datetime: current_user.login_datetime,
+                    User.login_count: current_user.login_count + 1,
+                }
+            )
+            tokens = await token.generate_token(current_user.id)
+            return (
+                AuthUserResetPasswordOut(
+                    access_token=tokens.access_token,
+                    refresh_token=tokens.refresh_token,
+                ),
+                True,
+            )
+        return AuthChangedPasswordErrorMessageOut(), False
+
+    async def change_password(
+        self,
+        verification: AuthUserChangePasswordIn,
+        current_user: User,
     ) -> Tuple[
         Union[
             AuthUserResetPasswordOut,
@@ -106,45 +138,25 @@ class UserController(BaseController):
         ],
         bool,
     ]:
-        if not is_limited:
-            if not verification.old_password:
-                raise HTTPException(
-                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                    detail=[
-                        {
-                            "loc": ["body", "old_password"],
-                            "msg": "Enter old_password",
-                        }
-                    ],
-                )
-            if not user_password.verify_password(
-                verification.old_password, current_user.hashed_password
-            ):
-                raise OldPasswordNotMatch
         if await self.set_password(
             user_id=current_user.id,
             new_password=verification.new_password,
         ):
-            if is_limited:
-                await User.find_one({"_id": current_user.id}).set(
-                    {
-                        User.login_datetime: datetime.now(timezone.utc),
-                        User.last_login_datetime: current_user.login_datetime,
-                        User.login_count: current_user.login_count + 1,
-                    }
-                )
-                tokens = await token.generate_token(current_user.id)
-                return (
-                    AuthUserResetPasswordOut(
-                        access_token=tokens.access_token,
-                        refresh_token=tokens.refresh_token,
-                    ),
-                    True,
-                )
-            else:
-                return AuthChangedPasswordMessageOut(), True
-        else:
-            return AuthChangedPasswordErrorMessageOut(), False
+            await User.find_one({"_id": current_user.id}).set(
+                {
+                    User.login_datetime: datetime.now(timezone.utc),
+                    User.last_login_datetime: current_user.login_datetime,
+                    User.login_count: current_user.login_count + 1,
+                }
+            )
+            tokens = await token.generate_token(current_user.id)
+            return (
+                AuthUserResetPasswordOut(
+                    access_token=tokens.access_token,
+                    refresh_token=tokens.refresh_token,
+                ),
+                True,
+            )
 
     @staticmethod
     async def set_password(

@@ -206,7 +206,9 @@ class AuthController(object):
     async def limited_verify_otp(
         verification: auth_schema.AuthOTPVerifyIn,
     ) -> auth_schema.AuthForgetVerifyOut:
-        user = await user_controller.find_by_username(username=verification.username)
+        user = await user_controller.get_single_obj(
+            mobile_number=verification.username["value"]
+        )
         if not user:
             raise user_exceptions.UserNotFound
         if (

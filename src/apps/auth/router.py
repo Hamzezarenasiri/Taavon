@@ -77,7 +77,7 @@ async def otp_verify_limited(
 
 
 @auth_router.post(
-    "/password/change",
+    "/password/forgot/reset",
     responses={
         409: {"model": ErrorResponse[AuthConflict409MessageEnum]},
         **response_500,
@@ -85,20 +85,18 @@ async def otp_verify_limited(
     response_model=Response[
         Union[
             auth_schema.AuthUserResetPasswordOut,
-            auth_schema.AuthChangedPasswordMessageOut,
+            auth_schema.AuthChangedPasswordErrorMessageOut,
         ]
     ],
-    description="`old_password` is `optional`:"
-    "\n\nif token `limited` is `true`:`old_password` not `required` "
-    "\n\n else: `old_password` is `required`\n\nBy `Hamze.zn`",
+    description="if token `limited` is `true`:  user can change password\n\nBy `Hamze.zn`",
 )
 @return_on_failure
-async def change_password(
-    payload: auth_schema.AuthUserChangePasswordIn,
+async def rest_forgot_password(
+    payload: auth_schema.AuthResetPasswordIn,
     current_user_limited: Tuple[User, bool] = Depends(get_user_limited_token),
 ):
     current_user, is_limited = current_user_limited
-    result_data, is_changed = await user_controller.change_password(
+    result_data, is_changed = await user_controller.reset_forgot_password(
         verification=payload, current_user=current_user, is_limited=is_limited
     )
     if is_changed:
@@ -110,7 +108,6 @@ async def change_password(
     return Response[
         Union[
             auth_schema.AuthUserResetPasswordOut,
-            auth_schema.AuthChangedPasswordMessageOut,
             auth_schema.AuthChangedPasswordErrorMessageOut,
         ]
     ](
