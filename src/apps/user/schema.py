@@ -1,17 +1,14 @@
-from datetime import date, datetime
+from datetime import datetime
 from enum import Enum
 from typing import List, Optional, Union, Dict
 
 import phonenumbers
-from pydantic import BaseModel, Field, HttpUrl, validator, EmailStr
+from pydantic import BaseModel, Field, validator
 
-from src import services
 from src.apps.auth.models import PermissionModel
 from src.apps.organization.models import Organization
 from src.apps.user.constants import (
     DefaultRoleNameEnum,
-    GenderEnum,
-    LoginType,
     UserStatus,
     UserType,
     DeviceType,
@@ -28,8 +25,6 @@ from src.core.base.field import (
 )
 from src.core.base.schema import BaseSchema, AddressSchema, CitySchemaIn, StateSchemaIn
 from src.core.mixins import SchemaID
-from src.core.mixins.fields import OptionalEmailStr
-from src.main.config import app_settings
 from src.services import global_services
 
 
@@ -51,19 +46,19 @@ class AddressSchemaOut(AddressSchema):
 class CreateUserRoleEnum(str, Enum):
     super_admin: str = DefaultRoleNameEnum.super_admin.value
     admin: str = DefaultRoleNameEnum.admin.value
-    user: str = DefaultRoleNameEnum.user.value
+    vendor: str = DefaultRoleNameEnum.vendor.value
+    customer: str = DefaultRoleNameEnum.customer.value
 
 
 class BaseUserSchema(BaseSchema):
-    email: Optional[EmailStr] = Field(example="user@example.com")
     first_name: Optional[str] = Field(example="John")
     is_enabled: Optional[bool] = True
-    is_user_data_recorder: Optional[bool] = False
     last_name: Optional[str] = Field(example="Doe")
     mobile_number: Optional[PhoneStr] = Field(example="+989123456789")
     organization_id: Optional[SchemaID] = None
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
     username: UsernameField
+    # email: Optional[EmailStr] = Field(example="user@example.com")
 
     @validator("mobile_number")
     @classmethod
@@ -81,19 +76,18 @@ class BaseUserSchema(BaseSchema):
 
 
 class UsersCreateOut(BaseUserSchema):
-    address: Optional[AddressSchemaOut]
-    avatar: Optional[str]
-    date_of_birth: Optional[date]
-    email_verified: Optional[bool]
+    # address: Optional[AddressSchemaOut]
+    # avatar: Optional[str]
+    # date_of_birth: Optional[date]
+    # email_verified: Optional[bool]
+    # gender: Optional[GenderEnum]
+    # is_blocked: Optional[bool] = False
     first_name: Optional[str] = Field(example="John")
-    gender: Optional[GenderEnum]
     id: SchemaID = Field(alias="id")
-    is_blocked: Optional[bool] = False
     is_force_change_password: Optional[bool]
     is_force_login: Optional[bool] = False
     last_name: Optional[str] = Field(example="Doe")
-    national_code: Optional[IranNationalCodeStr]
-    national_code: Optional[str]
+    national_code: IranNationalCodeStr
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
@@ -103,16 +97,19 @@ class UsersCreateOut(BaseUserSchema):
 
 
 class UsersCreateIn(BaseUserSchema):
-    address: Optional[AddressSchemaIn]
-    avatar: Optional[str]
-    date_of_birth: Optional[date]
-    email: EmailStr = Field(example="user@example.com")
-    email_verified: Optional[bool]
+    # address: Optional[AddressSchemaIn]
+    # avatar: Optional[str]
+    # date_of_birth: Optional[date]
+    # email: EmailStr = Field(example="user@example.com")
+    # email_verified: Optional[bool]
+    # gender: Optional[GenderEnum]
+    # is_force_change_password: Optional[bool] = True
+    # is_force_login: Optional[bool] = False
+    # settings: Optional[UserSettingsSchema] = UserSettingsSchema(language=app_settings.DEFAULT_LANGUAGE,
+    #       country_code=app_settings.DEFAULT_COUNTRY_CODE,).dict()
+    # telephone: Optional[PhoneStr]
+    # is_blocked: Optional[bool] = False
     first_name: str = Field(example="John")
-    gender: Optional[GenderEnum]
-    is_blocked: Optional[bool] = False
-    is_force_change_password: Optional[bool] = True
-    is_force_login: Optional[bool] = False
     last_name: str = Field(example="Doe")
     mobile_number: PhoneStr = Field(example="+989123456789")
     national_code: IranNationalCodeStr
@@ -120,11 +117,6 @@ class UsersCreateIn(BaseUserSchema):
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]] = []
-    settings: Optional[UserSettingsSchema] = UserSettingsSchema(
-        language=app_settings.DEFAULT_LANGUAGE,
-        country_code=app_settings.DEFAULT_COUNTRY_CODE,
-    ).dict()
-    telephone: Optional[PhoneStr]
     user_status: Optional[UserStatus]
     user_type: Optional[UserType]
 
@@ -143,7 +135,6 @@ class UsersCreateIn(BaseUserSchema):
             )
 
 
-
 class UserSocialCreateSchema(UsersCreateIn):
     first_name: Optional[str] = Field(example="John")
     last_name: Optional[str] = Field(example="Doe")
@@ -151,31 +142,31 @@ class UserSocialCreateSchema(UsersCreateIn):
 
 
 class UserCreateSchemaOut(BaseUserSchema):
+    # address: Optional[AddressSchemaOut]
+    # avatar: Optional[str]
+    # date_of_birth: Optional[date]
+    # gender: Optional[GenderEnum]
+    # is_blocked: Optional[bool] = False
+    # settings: Optional[UserSettingsSchema]
+    # telephone: Optional[PhoneStr]
+    # login_type: Optional[LoginType]
+    # email_verified: Optional[bool]
+
     id: SchemaID = Field(alias="_id")
-    address: Optional[AddressSchemaOut]
-    avatar: Optional[str]
-    date_of_birth: Optional[date]
     first_name: Optional[str] = Field(example="John")
     last_name: Optional[str] = Field(example="Doe")
-    gender: Optional[GenderEnum]
-    national_code: Optional[IranNationalCodeStr]
-    is_blocked: Optional[bool] = False
     is_force_change_password: Optional[bool]
     is_force_login: Optional[bool] = False
     national_code: Optional[IranNationalCodeStr]
     permissions: Optional[List[PermissionModel]]
-    settings: Optional[UserSettingsSchema]
-    telephone: Optional[PhoneStr]
     user_status: Optional[UserStatus]
     roles: List[Optional[Union[str, CreateUserRoleEnum]]] = [
         CreateUserRoleEnum.admin.value
     ]
-    login_type: Optional[LoginType]
     last_login_datetime: Optional[datetime]
     login_datetime: Optional[datetime]
     user_type: Optional[UserType]
     phone_verified: Optional[bool]
-    email_verified: Optional[bool]
 
 
 class UsersGetUserOut(UserCreateSchemaOut):
@@ -191,12 +182,12 @@ class UsersBlockingUserPatchOut(BaseSchema):
 
 
 class UsersGetUserSubListOut(BaseUserSchema):
-    avatar: Optional[str]
-    country: Optional[CountryCode]
+    # avatar: Optional[str]
+    # country: Optional[CountryCode]
+    # is_blocked: bool
+    # login_type: Optional[LoginType]
     id: SchemaID
-    is_blocked: bool
     login_datetime: Optional[datetime]
-    login_type: Optional[LoginType]
     national_code: Optional[IranNationalCodeStr]
     organization_name: Optional[str]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]] = []
@@ -210,14 +201,16 @@ class UsersChangePasswordByAdminIn(BaseModel):
 
 
 class UsersUpdateIn(BaseSchema):
-    address: Optional[AddressSchemaIn]
-    avatar: Optional[str]
-    date_of_birth: Optional[date]
-    email: Optional[EmailStr] = Field(example="user@example.com")
-    email_verified: Optional[bool]
+    # address: Optional[AddressSchemaIn]
+    # avatar: Optional[str]
+    # date_of_birth: Optional[date]
+    # email: Optional[EmailStr] = Field(example="user@example.com")
+    # email_verified: Optional[bool]
+    # gender: Optional[GenderEnum]
+    # is_blocked: Optional[bool]
+    # settings: Optional[UserSettingsSchema]
+    # telephone: Optional[PhoneStr]
     first_name: Optional[str] = Field(example="John")
-    gender: Optional[GenderEnum]
-    is_blocked: Optional[bool]
     is_enabled: Optional[bool]
     is_force_change_password: Optional[bool]
     is_force_login: Optional[bool]
@@ -230,22 +223,22 @@ class UsersUpdateIn(BaseSchema):
     organization_id: Optional[SchemaID] = None
     organization_name: Optional[str]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]]
-    settings: Optional[UserSettingsSchema]
-    telephone: Optional[PhoneStr]
     user_status: Optional[UserStatus]
     user_type: Optional[UserType]
     username: Optional[UsernameField]
 
 
 class UsersUpdateAdminUserIn(BaseSchema):
-    address: Optional[AddressSchemaIn]
-    avatar: Optional[str]
-    date_of_birth: Optional[date]
-    email_verified: Optional[bool]
+    # address: Optional[AddressSchemaIn]
+    # avatar: Optional[str]
+    # date_of_birth: Optional[date]
+    # email_verified: Optional[bool]
+    # gender: Optional[GenderEnum]
+    # settings: Optional[UserSettingsSchema]
+    # telephone: Optional[PhoneStr]
+    # is_blocked: Optional[bool]
     first_name: str = Field(example="John")
-    gender: Optional[GenderEnum]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]]
-    is_blocked: Optional[bool]
     is_enabled: Optional[bool]
     is_force_change_password: Optional[bool]
     is_force_login: Optional[bool]
@@ -254,47 +247,48 @@ class UsersUpdateAdminUserIn(BaseSchema):
     password: Optional[PasswordField]
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
-    settings: Optional[UserSettingsSchema]
-    telephone: Optional[PhoneStr]
     user_status: Optional[UserStatus]
     user_type: Optional[UserType]
     username: Optional[UsernameField]
 
 
 class ProfileUpdateMeIn(BaseSchema):
-    avatar: Optional[HttpUrl]
-    date_of_birth: Optional[date] = Field(example="1999-09-09")
+    # avatar: Optional[HttpUrl]
+    # date_of_birth: Optional[date] = Field(example="1999-09-09")
+    # gender: Optional[GenderEnum] = Field(example=GenderEnum.male)
+    # settings: Optional[UserSettingsSchema]
+    # telephone: Optional[PhoneStr]
     first_name: Optional[str]
-    gender: Optional[GenderEnum] = Field(example=GenderEnum.male)
-    last_name: Optional[str]
-    mobile_number: Optional[PhoneStr] = Field(example="+982112345678")
-    national_code: Optional[IranNationalCodeStr]
-    settings: Optional[UserSettingsSchema]
-    telephone: Optional[PhoneStr]
+    # last_name: Optional[str]
+    # mobile_number: Optional[PhoneStr] = Field(example="+982112345678")
+    # national_code: Optional[IranNationalCodeStr]
 
-    @validator("mobile_number")
-    @classmethod
-    def validate_mobile_number(cls, value: str):
-        if not value:
-            return value
-        try:
-            mobile_number_obj = phonenumbers.parse(value, "IR")
-            return phonenumbers.format_number(
-                mobile_number_obj,
-                phonenumbers.PhoneNumberFormat.E164,
-            )
-        except phonenumbers.NumberParseException as e:
-            raise ValueError("Invalid Phone Number") from e
+    # @validator("mobile_number")
+    # @classmethod
+    # def validate_mobile_number(cls, value: str):
+    #     if not value:
+    #         return value
+    #     try:
+    #         mobile_number_obj = phonenumbers.parse(value, "IR")
+    #         return phonenumbers.format_number(
+    #             mobile_number_obj,
+    #             phonenumbers.PhoneNumberFormat.E164,
+    #         )
+    #     except phonenumbers.NumberParseException as e:
+    #         raise ValueError("Invalid Phone Number") from e
 
 
 class ProfileGetMeAgg(BaseSchema):
-    address: Optional[AddressSchemaOut]
-    avatar: Optional[str]
+    # address: Optional[AddressSchemaOut]
+    # avatar: Optional[str]
+    # date_of_birth: Optional[date] = Field(example="1999-09-09")
+    # email: Optional[OptionalEmailStr] = Field(example="user@example.com")
+    # login_type: Optional[LoginType]
+    # settings: UserSettingsSchema | None
+    # telephone: Optional[PhoneStr]
+    # gender: Optional[GenderEnum] = Field(example=GenderEnum.male)
     create_datetime: datetime
-    date_of_birth: Optional[date] = Field(example="1999-09-09")
-    email: Optional[OptionalEmailStr] = Field(example="user@example.com")
     first_name: Optional[str] = Field(example="John")
-    gender: Optional[GenderEnum] = Field(example=GenderEnum.male)
     id: SchemaID = Field(alias="_id")
     is_enabled: Optional[bool]
     is_force_change_password: Optional[bool] = Field(example=True)
@@ -302,13 +296,10 @@ class ProfileGetMeAgg(BaseSchema):
     last_login_datetime: Optional[datetime]
     last_name: Optional[str] = Field(example="Doe")
     login_datetime: Optional[datetime]
-    login_type: Optional[LoginType]
     mobile_number: Optional[PhoneStr] = Field(example="+989123456789")
     national_code: Optional[IranNationalCodeStr] = Field(example="hNzrH4'7<-")
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
-    settings: UserSettingsSchema | None
-    telephone: Optional[PhoneStr]
-    user_status: UserStatus | None
+    user_status: Optional[UserStatus]
     username: UsernameField
 
 

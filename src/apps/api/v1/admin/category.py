@@ -71,7 +71,7 @@ async def get_all_category(
     ordering: Ordering = Depends(Ordering()),
     is_enabled: bool = Query(None),
 ) -> Response[PaginatedResponse[List[category_schema.CategoryGetListOut]]]:
-    criteria = {"is_deleted": False}
+    criteria = {"is_deleted": {"$ne": True}}
     if cat_id:
         criteria.update(parent=cat_id)
     if is_enabled is not None:
@@ -97,7 +97,7 @@ async def get_all_category_hierarchical(
     depth: int = Query(2),
     parent: SchemaID = Query(None),
 ):
-    criteria = {"is_enabled": True, "is_deleted": False, "parent": parent}
+    criteria = {"is_enabled": True, "is_deleted": {"$ne": True}, "parent": parent}
 
     result_data = await category_controller.get_all_category_hierarchical(
         criteria=criteria, depth=depth
@@ -116,7 +116,7 @@ async def get_categories_without_pagination(
     _: User = Security(get_current_user, scopes=[entity, "list"]),
 ):
     result_data = await category_controller.get_list_objs_without_pagination(
-        criteria={"parent": None, "is_deleted": False}
+        criteria={"parent": None, "is_deleted": {"$ne": True}}
     )
     return Response[List[category_schema.CategoryGetListOut]](data=result_data)
 

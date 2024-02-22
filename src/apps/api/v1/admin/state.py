@@ -38,7 +38,7 @@ async def admin_get_states(
     pagination: Pagination = Depends(),
     ordering: Ordering = Depends(Ordering()),
 ):
-    criteria = {"is_deleted": False}
+    criteria = {"is_deleted": {"$ne": True}}
     pipeline = [
         {"$match": criteria},
         {"$addFields": {"id": "$_id"}},

@@ -75,7 +75,7 @@ async def get_product(
     _: User = Security(get_current_user, scopes=[entity, "read"]),
 ):
     product = await product_crud.get_product_joined(
-        product_id=product_id, criteria={"is_deleted": False}
+        product_id=product_id, criteria={"is_deleted": {"$ne": True}}
     )
     return Response[product_schemas.ProductDetailSchema](data=product)
 
@@ -197,7 +197,9 @@ async def get_products(
         schema=product_schemas.ProductListSchema,
         criteria=criteria,
     )
-    return Response[PaginatedResponse[List[product_schemas.ProductListSchema]]](data=products)
+    return Response[PaginatedResponse[List[product_schemas.ProductListSchema]]](
+        data=products
+    )
 
 
 @product_router.delete(

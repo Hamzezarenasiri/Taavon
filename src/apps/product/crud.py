@@ -97,7 +97,7 @@ class ProductCRUD(BaseCRUD):
         if criteria is None:
             criteria = {}
         criteria |= {
-            "is_deleted": False,
+            "is_deleted": {"$ne": True},
             "product_state": ProductStateEnum.DRAFT,
             "is_enabled": True,
         }

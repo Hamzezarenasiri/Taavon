@@ -76,8 +76,8 @@ ALL_USER_STATUSES = [i.value for i in UserStatus.__members__.values()]
 
 
 class UserType(str, Enum):
-    data_recorder: str = "data_recorder"
-    regular: str = "regular"
+    vendor: str = "vendor"
+    customer: str = "customer"
 
 
 ALL_USER_TYPES = [i.value for i in UserType.__members__.values()]
@@ -103,7 +103,8 @@ ALL_Address_Types = [i.value for i in AddressType.__members__.values()]
 class DefaultRoleNameEnum(str, Enum):
     super_admin: str = "super_admin"
     admin: str = "admin"
-    user: str = "user"
+    vendor: str = "vendor"
+    customer: str = "customer"
 
 
 ALL_ROLE_NAMES = [i.value for i in DefaultRoleNameEnum.__members__.values()]

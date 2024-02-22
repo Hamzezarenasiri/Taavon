@@ -64,24 +64,24 @@ async def get_my_permissions_dict(
     return Response[user_schema.ProfileGetPermissionsDict](data=result_data)
 
 
-@profile_router.patch(
-    "",
-    responses={
-        **common_responses,
-    },
-    response_model=Response[user_schema.ProfileGetMeOut],
-    description="Update admin profile record",
-)
-@return_on_failure
-async def update_my_profile(
-    payload: user_schema.ProfileUpdateMeIn,
-    current_user: User = Security(
-        get_current_user,
-        scopes=[entity, "update"],
-    ),
-) -> Response[user_schema.ProfileGetMeOut]:
-    result_data = await profile_controller.update_profile(
-        current_user=current_user,
-        payload=payload,
-    )
-    return Response[user_schema.ProfileGetMeOut](data=result_data)
+# @profile_router.patch(
+#     "",
+#     responses={
+#         **common_responses,
+#     },
+#     response_model=Response[user_schema.ProfileGetMeOut],
+#     description="Update admin profile record",
+# )
+# @return_on_failure
+# async def update_my_profile(
+#     payload: user_schema.ProfileUpdateMeIn,
+#     current_user: User = Security(
+#         get_current_user,
+#         scopes=[entity, "update"],
+#     ),
+# ) -> Response[user_schema.ProfileGetMeOut]:
+#     result_data = await profile_controller.update_profile(
+#         current_user=current_user,
+#         payload=payload,
+#     )
+#     return Response[user_schema.ProfileGetMeOut](data=result_data)

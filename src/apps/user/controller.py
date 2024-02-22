@@ -12,7 +12,6 @@ from pymongo.errors import DuplicateKeyError
 
 from src.apps.auth.exceptions import (
     OldPasswordNotMatch,
-    UserRegisterEmailExists,
     UserRegisterPhoneExists,
 )
 from src.apps.auth.schema import (
@@ -40,7 +39,7 @@ from src.core.base.schema import PaginatedResponse, Response
 from src.core.common import exceptions
 from src.core.common.exceptions import DeleteFailed, UpdateFailed
 from src.core.mixins.fields import SchemaID
-from src.core.mixins.models import USERNAME_IS_EMAIL, USERNAME_IS_PHONE
+from src.core.mixins.models import USERNAME_IS_PHONE
 from src.core.ordering import Ordering
 from src.core.otp import OtpRequestType
 from src.core.pagination import Pagination
@@ -48,9 +47,9 @@ from src.core.security import user_password
 from src.main.config import app_settings, collections_names
 from src.services.db.mongodb import UpdateOperatorsEnum
 from . import schema as user_schema
-from .constants import UserStatus, UserMessageEnum
+from .constants import UserMessageEnum
 from .crud import users_crud
-from .exceptions import UserIsDisabled, UserIsBlocked, UserIsPending, UserIsRejected
+from .exceptions import UserIsDisabled
 from .models import User
 from ..auth.constants import AuthOTPTypeEnum
 from ..auth.crud import permissions_crud
@@ -193,16 +192,16 @@ class UserController(BaseController):
         )
         username_type = new_user_data.username["value_type"]
         if user:
-            if username_type == USERNAME_IS_EMAIL and user.email_verified:
-                raise UserRegisterEmailExists
-            elif username_type == USERNAME_IS_PHONE and user.phone_verified:
+            if username_type == USERNAME_IS_PHONE and user.phone_verified:
                 raise UserRegisterPhoneExists
+            # elif username_type == USERNAME_IS_EMAIL and user.email_verified:
+            #     raise UserRegisterEmailExists
             else:
                 query_options = {
-                    USERNAME_IS_EMAIL: {
-                        USERNAME_IS_EMAIL: new_user_data.username["value"],
-                        "email_verified": False,
-                    },
+                    # USERNAME_IS_EMAIL: {
+                    #     USERNAME_IS_EMAIL: new_user_data.username["value"],
+                    #     "email_verified": False,
+                    # },
                     USERNAME_IS_PHONE: {
                         USERNAME_IS_PHONE: new_user_data.username["value"],
                         "phone_verified": False,
@@ -215,7 +214,10 @@ class UserController(BaseController):
                 )
                 background_tasks.add_task(
                     users_crud.hard_delete_many,
-                    criteria={"email": None, "mobile_number": None},
+                    criteria={
+                        # "email": None,
+                        "mobile_number": None,
+                    },
                 )
                 created_user, _ = await users_crud.default_update_and_get(
                     dict(id=user.id), new_doc=user_dict_data
@@ -224,9 +226,10 @@ class UserController(BaseController):
             created_user = await users_crud.create(User(**user_dict_data))
         await otp.set_otp_and_send_message(
             user=created_user,
-            otp_type=AuthOTPTypeEnum.email
-            if username_type == USERNAME_IS_EMAIL
-            else AuthOTPTypeEnum.sms,
+            # otp_type=AuthOTPTypeEnum.email
+            # if username_type == USERNAME_IS_EMAIL
+            # else AuthOTPTypeEnum.sms,
+            otp_type=AuthOTPTypeEnum.sms,
             cache_key=new_user_data.username["value"],
             request_type=OtpRequestType.verification,
         )
@@ -248,18 +251,18 @@ class UserController(BaseController):
         try:
             created_user = await users_crud.create(User(**user_dict_data))
         except DuplicateKeyError as e:
-            raise UserRegisterEmailExists from e
+            raise UserRegisterPhoneExists from e
         return await self.generate_token_for_user(created_user)
 
     async def generate_token_for_user(self, user):
         if not user.is_enabled:
             raise UserIsDisabled
-        if user.is_blocked:
-            raise UserIsBlocked
-        if user.user_status == UserStatus.pending:
-            raise UserIsPending
-        if user.user_status == UserStatus.rejected:
-            raise UserIsRejected
+        # if user.is_blocked:
+        #     raise UserIsBlocked
+        # if user.user_status == UserStatus.pending:
+        #     raise UserIsPending
+        # if user.user_status == UserStatus.rejected:
+        #     raise UserIsRejected
         await users_crud.update(
             criteria={"_id": user.id},
             new_doc={

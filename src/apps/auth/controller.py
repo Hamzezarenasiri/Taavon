@@ -62,8 +62,8 @@ class AuthController(object):
             raise user_exceptions.UserNotFound
         if not user.is_enabled:
             raise user_exceptions.UserIsDisabled
-        if user.is_blocked:
-            raise user_exceptions.UserIsBlocked
+        # if user.is_blocked:
+        #     raise user_exceptions.UserIsBlocked
         # if user.email and not user.email_verified:
         #     raise UserEmailNotVerified(data=dict(username=user.email))
         # elif user.mobile_number and not user.phone_verified:
@@ -92,8 +92,8 @@ class AuthController(object):
             raise user_exceptions.UserNotFound
         if not user.is_enabled:
             raise user_exceptions.UserIsDisabled
-        if user.is_blocked:
-            raise user_exceptions.UserIsBlocked
+        # if user.is_blocked:
+        #     raise user_exceptions.UserIsBlocked
         # if user.email and not user.email_verified:
         #     raise UserEmailNotVerified(data=dict(username=user.email))
         # elif user.mobile_number and not user.phone_verified:
@@ -128,8 +128,8 @@ class AuthController(object):
 
         if not user.is_enabled:
             raise user_exceptions.UserIsDisabled
-        if user.is_blocked:
-            raise user_exceptions.UserIsBlocked
+        # if user.is_blocked:
+        #     raise user_exceptions.UserIsBlocked
         # if user.email and not user.email_verified:
         #     raise UserEmailNotVerified(data=dict(username=user.email))
         # if user.mobile_number and not user.phone_verified:
@@ -311,12 +311,12 @@ class AuthController(object):
             )
         if not user.is_enabled:
             raise UserIsDisabled
-        if user.is_blocked:
-            raise UserIsBlocked
-        if user.user_status == UserStatus.pending:
-            raise UserIsPending
-        if user.user_status == UserStatus.rejected:
-            raise UserIsRejected
+        # if user.is_blocked:
+        #     raise UserIsBlocked
+        # if user.user_status == UserStatus.pending:
+        #     raise UserIsPending
+        # if user.user_status == UserStatus.rejected:
+        #     raise UserIsRejected
         new_doc = {
             "login_datetime": datetime.utcnow(),
             "last_login_datetime": user.login_datetime,

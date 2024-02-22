@@ -1,6 +1,6 @@
 configs = {
     "auto_confirmation": True,
-    "is_deleted": False,
+    "is_deleted": {"$ne": True},
     "is_enabled": True,
     "other_configs": {},
     "office_address": {

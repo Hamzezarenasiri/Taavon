@@ -108,7 +108,7 @@ class CategoryController(BaseController):
         )
         products_criteria = {
             "is_enabled": True,
-            "is_deleted": False,
+            "is_deleted": {"$ne": True},
             # "product_status": ProductStateEnum.DRAFT,
         }
         if target_id:

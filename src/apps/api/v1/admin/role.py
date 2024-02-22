@@ -66,7 +66,7 @@ async def get_all_role(
     ordering: Ordering = Depends(Ordering()),
 ):
     result_data = await role_controller.get_all_role(
-        pagination=pagination, ordering=ordering, criteria={"is_deleted": False}
+        pagination=pagination, ordering=ordering, criteria={"is_deleted": {"$ne": True}}
     )
     return Response[PaginatedResponse[List[role_schema.RoleGetListOut]]](
         data=result_data.dict(), message=RoleMessageEnum.get_roles

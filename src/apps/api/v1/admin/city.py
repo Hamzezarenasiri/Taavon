@@ -40,7 +40,7 @@ async def admin_get_cities(
     pagination: Pagination = Depends(),
     ordering: Ordering = Depends(Ordering()),
 ):
-    criteria = {"is_deleted": False}
+    criteria = {"is_deleted": {"$ne": True}}
     if state_id:
         criteria["state_id"] = state_id
     pipeline = [

@@ -7,7 +7,7 @@ all_users = [
     {
         "_id": ObjectId("0123456789abcdef01234567"),
         "is_blocked": False,
-        "is_deleted": False,
+        "is_deleted": {"$ne": True},
         "is_enabled": True,
         "is_force_change_password": False,
         "is_force_login": False,

@@ -31,8 +31,8 @@ async def get_user_obj(token) -> User:
         raise UserForceLogin
     if not user_obj.is_enabled:
         raise user_exception.UserIsDisabled
-    if user_obj.is_blocked:
-        raise user_exception.UserIsBlocked
+    # if user_obj.is_blocked:
+    #     raise user_exception.UserIsBlocked
     # if user_obj.email and not user_obj.email_verified:
     #     raise user_exception.UserEmailNotVerified(data=dict(username=user_obj.email))
     # if user_obj.mobile_number and not user_obj.phone_verified:
@@ -88,6 +88,6 @@ async def get_user_limited_token(
         raise user_exception.UserNotFound
     if not user_obj.is_enabled:
         raise user_exception.UserIsDisabled
-    if user_obj.is_blocked:
-        raise user_exception.UserIsBlocked
+    # if user_obj.is_blocked:
+    #     raise user_exception.UserIsBlocked
     return user_obj, payload.limited

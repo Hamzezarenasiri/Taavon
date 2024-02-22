@@ -21,7 +21,6 @@ from starlette.responses import FileResponse, JSONResponse
 from src.apps.auth.deps import get_current_user
 from src.apps.country.crud import state_crud, city_crud
 from src.apps.country.models import State, City
-from src.apps.file.schema import FileOut
 from src.apps.language.constants import LanguageEnum
 from src.apps.log_app.constants import LogActionEnum
 from src.apps.log_app.controller import log_controller
@@ -29,13 +28,9 @@ from src.apps.organization.crud import organization_crud
 from src.apps.organization.models import Organization
 from src.apps.user import schema as user_schema
 from src.apps.user.constants import ALL_USER_STATUSES, UserMessageEnum, UserStatus
-from src.apps.user.controller import profile_controller, user_controller
+from src.apps.user.controller import user_controller
 from src.apps.user.models import User
 from src.apps.user.schema import AddressSchemaIn
-from src.constants import (
-    ALL_COUNTRY_CODES,
-    CountryCode,
-)
 from src.core.base.schema import (
     BulkDeleteIn,
     PaginatedResponse,
@@ -50,12 +45,10 @@ from src.core.pagination import Pagination
 from src.core.responses import (
     common_responses,
     response_404,
-    response_413,
     response_403,
 )
 from src.core.security import user_password
 from src.core.utils import return_on_failure
-from src.core.validators import avatar_validation
 from src.main.config import app_settings, collections_names
 
 user_router = APIRouter()
@@ -79,7 +72,7 @@ async def get_all_users(
     pagination: Pagination = Depends(),
     ordering: Ordering = Depends(Ordering()),
 ) -> Response[PaginatedResponse[List[user_schema.UsersGetUserSubListOut]]]:
-    criteria = {"is_deleted": False}
+    criteria = {"is_deleted": {"$ne": True}}
     if search:
         search = ar_to_fa(search)
         if search := re.sub(r"[()\[\]'*+?\\]", "", search):
@@ -120,9 +113,8 @@ async def export_users_csv(
     search: Optional[str] = Query(None),
     user_status: Optional[List[UserStatus]] = Query(None, enum=ALL_USER_STATUSES),
     roles: Optional[List[str]] = Query(None),
-    country: Optional[List[CountryCode]] = Query(None, enum=ALL_COUNTRY_CODES),
 ):
-    criteria = {}
+    criteria = {"is_deleted": {"$ne": True}}
     if search:
         search = ar_to_fa(search)
         if search := re.sub(r"[()\[\]'*+?\\]", "", search):
@@ -142,8 +134,6 @@ async def export_users_csv(
         criteria["user_status"] = {"$in": user_status}
     if roles:
         criteria["roles"] = {"$in": roles}
-    if country:
-        criteria["settings.country"] = {"$in": country}
     result_data = await user_controller.export_csv(
         files_path=app_settings.DEFAULT_FILES_PATH,
         entity_name=entity,
@@ -364,24 +354,25 @@ async def delete_single_user(
         return StarletteResponse(status_code=204)
 
 
-@user_router.patch(
-    "/avatar/{user_id}/",
-    description="Upload avatar for an existing user",
-    status_code=status.HTTP_200_OK,
-    responses={**common_responses, **response_413},
-    response_model=Response[FileOut],
-)
-@return_on_failure
-async def upload_avatar(
-    user_id: SchemaID = Path(...),
-    avatar=Depends(avatar_validation),
-    _: User = Security(get_current_user, scopes=[entity, "update"]),
-):
-    path = app_settings.DEFAULT_AVATARS_PATH
-    result = await profile_controller.upload_avatar(
-        avatar=avatar, user_id=ObjectId(user_id), path=path
-    )
-    return Response[FileOut](data=result)
+#
+# @user_router.patch(
+#     "/avatar/{user_id}/",
+#     description="Upload avatar for an existing user",
+#     status_code=status.HTTP_200_OK,
+#     responses={**common_responses, **response_413},
+#     response_model=Response[FileOut],
+# )
+# @return_on_failure
+# async def upload_avatar(
+#     user_id: SchemaID = Path(...),
+#     avatar=Depends(avatar_validation),
+#     _: User = Security(get_current_user, scopes=[entity, "update"]),
+# ):
+#     path = app_settings.DEFAULT_AVATARS_PATH
+#     result = await profile_controller.upload_avatar(
+#         avatar=avatar, user_id=ObjectId(user_id), path=path
+#     )
+#     return Response[FileOut](data=result)
 
 
 @user_router.post(

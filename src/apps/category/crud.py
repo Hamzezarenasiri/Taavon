@@ -25,7 +25,7 @@ class CategoryCRUD(BaseCRUD):
             criteria = {}
         criteria.update(
             {
-                "is_deleted": False,
+                "is_deleted": {"$ne": True},
             }
         )
         results = await self.full_join_aggregate(criteria)
