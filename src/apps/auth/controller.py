@@ -157,7 +157,7 @@ class AuthController(object):
             USERNAME_IS_PHONE: AuthOTPTypeEnum.sms,
             USERNAME_IS_EMAIL: AuthOTPTypeEnum.email,
         }[username["value_type"]]
-        user_obj = await user_controller.find_by_username(username)
+        user_obj = await user_controller.get_single_obj(mobile_number=username["value"])
         if user_obj:
             # background_tasks.add_task(
             #     func=otp.set_otp_and_send_message,
