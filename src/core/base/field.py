@@ -188,3 +188,51 @@ class IranNationalCodeStr(str):
             type="string",
             example="1111111111",
         )
+
+
+class EconomicCodeStr(str):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, value):
+        if not isinstance(value, str):
+            raise ValueError("economic_code must be a string")
+        if not 11 <= len(value) <= 14:
+            raise ValueError("economic_code must be 11 to 14 characters long")
+        if not all(c.isdigit() for c in value):
+            raise ValueError("economic_code must be all digits")
+        return value
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(
+            type="string",
+            example="98765432101234",
+        )
+
+
+class ShebaStr(str):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, value):
+        if not isinstance(value, str):
+            raise ValueError("sheba must be a string")
+        if len(value) != 24:
+            raise ValueError("sheba must be 24 characters long")
+        if not value.startswith("IR"):
+            raise ValueError("sheba must start with IR")
+        if not all(c.isalnum() for c in value[2:]):
+            raise ValueError("sheba must be all alphanumeric characters after IR")
+        return value
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(
+            type="string",
+            example="IR123456789012345678901234",
+        )

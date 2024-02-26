@@ -190,6 +190,7 @@ class AuthController(object):
             "login_datetime": datetime.now(timezone.utc),
             "last_login_datetime": user.login_datetime,
             "login_count": user.login_count + 1,
+            "is_force_login": False,
         }
         # if verification.username.value_type == USERNAME_IS_EMAIL:
         #     new_doc["email_verified"] = True

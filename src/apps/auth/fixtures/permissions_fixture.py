@@ -79,5 +79,9 @@ admin_permissions = [
         "entity": collections_names.REPORT,
         "rules": ["list", "create", "read", "update", "delete", "menu"],
     },
+    {
+        "entity": collections_names.STORE,
+        "rules": ["list", "create", "read", "update", "delete", "menu"],
+    },
 ]
 super_admin_permissions = admin_permissions + []

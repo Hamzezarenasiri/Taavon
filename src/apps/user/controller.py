@@ -67,7 +67,7 @@ class UserController(BaseController):
 
     @staticmethod
     async def find_by_username(
-        username: dict,
+        username: str,
         and_conditions: Optional[dict] = None,
         raise_exception: bool = True,
     ) -> Optional[User]:
@@ -81,7 +81,7 @@ class UserController(BaseController):
 
     async def authenticate_by_username_pass(
         self,
-        username: dict,
+        username: str,
         password: str,
         and_conditions: Optional[dict] = None,
     ) -> Optional[User]:

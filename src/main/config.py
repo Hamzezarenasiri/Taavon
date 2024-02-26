@@ -101,6 +101,7 @@ class AppSettings(BaseSettings):
         "organization",
         "report",
         "user",
+        "store",
     ]
 
 
@@ -135,6 +136,7 @@ class CollectionsNames(BaseSettings):
     USER: str = "User"
     PROFILE: str = "Profile"
     DASHBOARD: str = "Dashboard"
+    STORE: str = "Store"
 
 
 collections_names = CollectionsNames()

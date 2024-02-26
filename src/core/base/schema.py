@@ -16,7 +16,7 @@ from pydantic.generics import GenericModel
 from src.apps.country.models import City, State
 from src.apps.organization.constants import Organization422MessageEnum
 from src.apps.user.constants import AddressType
-from src.core.base.field import PhoneStr
+from src.core.base.field import PhoneStr, IranPostalCodeField
 from src.core.mixins import SchemaID
 from src.core.mixins.fields import PointField
 from src.core.utils import phone_to_e164_format
@@ -179,10 +179,9 @@ class StateSchemaIn(BaseSchema):
             {"_id": value}
         ):
             return value
-        else:
-            raise ValueError(
-                Organization422MessageEnum.Invalid_state_id_state_not_found.value
-            )
+        raise ValueError(
+            Organization422MessageEnum.Invalid_state_id_state_not_found.value
+        )
 
 
 class AddressSchema(BaseSchema):
@@ -192,17 +191,19 @@ class AddressSchema(BaseSchema):
     alternate_phone_number: Optional[PhoneStr]
     apartment_number: Optional[str]
     area: Optional[str]
-    building_name: Optional[str]
     city: Optional[CitySchema]
     country_code: Optional[str] = "IR"
     first_name: Optional[str]
     is_default: Optional[bool] = False
-    landmark: Optional[str]
     last_name: Optional[str]
     location: Optional[PointField]
     phone_number: Optional[PhoneStr]
-    postal_code: Optional[str]
+    postal_code: Optional[IranPostalCodeField]
     state: Optional[StateSchema]
     street: Optional[str]
-    town: Optional[str]
     type: Optional[AddressType]
+
+
+class FileSchema(BaseSchema):
+    file_id: SchemaID
+    file_url: str
