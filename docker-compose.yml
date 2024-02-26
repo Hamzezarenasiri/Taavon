@@ -1,33 +1,33 @@
 version: "3.8"
 
 services:
-  redis:
-    container_name: redis
-    image: redis:${REDIS_VERSION}
-#    sysctls:
-#      - vm.overcommit_memory=1
-    restart: always
+#  redis:
+#    container_name: redis
+#    image: redis:${REDIS_VERSION}
+##    sysctls:
+##      - vm.overcommit_memory=1
+#    restart: always
+##    ports:
+##      - '6379:6379'
+#    command: redis-server --save 20 1 --loglevel warning
+##    volumes:
+##      - cache:/data
+#    networks:
+#      - taavon_net
+#
+#  mongodb:
+#    image: mongo:${MONGODB_VERSION}
+#    container_name: mongodb
+#    restart: always
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: tanha
+#      MONGO_INITDB_ROOT_PASSWORD: tanha1ubuntu
 #    ports:
-#      - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning
+#      - "27017:27017"
 #    volumes:
-#      - cache:/data
-    networks:
-      - taavon_net
-
-  mongodb:
-    image: mongo:${MONGODB_VERSION}
-    container_name: mongodb
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: tanha
-      MONGO_INITDB_ROOT_PASSWORD: tanha1ubuntu
-    ports:
-      - "27017:27017"
-    volumes:
-      - /home/DBs/MongoDB/Taavon:/data/db
-    networks:
-      - taavon_net
+#      - /home/DBs/MongoDB/Taavon:/data/db
+#    networks:
+#      - taavon_net
   app:
     build:
       context: .
