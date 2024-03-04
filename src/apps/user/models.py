@@ -76,7 +76,7 @@ class User(Document):
     # settings: Optional[UserSettings]
     # telephone: Optional[PhoneStr]
     update_datetime: Optional[datetime]
-    user_status: Optional[UserStatus] = UserStatus.just_added.value
+    user_status: Optional[UserStatus] = UserStatus.JUST_ADDED.value
     user_type: Optional[UserType]
     username: Indexed(UsernameField, unique=True)
     organization_ids: list[DB_ID] = Field([])

@@ -271,7 +271,7 @@ class UserController(BaseController):
             raise UserIsDisabled
         # if user.is_blocked:
         #     raise UserIsBlocked
-        # if user.user_status == UserStatus.pending:
+        # if user.user_status == UserStatus.PENDING:
         #     raise UserIsPending
         # if user.user_status == UserStatus.rejected:
         #     raise UserIsRejected

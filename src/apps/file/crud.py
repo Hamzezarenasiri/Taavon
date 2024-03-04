@@ -99,7 +99,7 @@ class FileCRUD(BaseCRUD):
     ) -> file_schema.FileUpdateOut:
         criteria = (
             {"id": file_id}
-            if current_user.role == RoleEnum.admin.value
+            if current_user.role == RoleEnum.ADMIN.value
             else {"id": file_id, "user_id": current_user.id}
         )
         updated, is_updated = await files_crud.update_and_get(

@@ -58,64 +58,64 @@ class UserBadRequestErrorDetailEnum(List[str], Enum):
 
 
 class LoginType(str, Enum):
-    direct: str = "direct"
-    social: str = "social"
+    DIRECT: str = "direct"
+    SOCIAL: str = "social"
 
 
 ALL_LOGIN_TYPES = [i.value for i in LoginType.__members__.values()]
 
 
 class UserStatus(str, Enum):
-    pending: str = "pending"
-    just_added: str = "just_added"
-    confirmed: str = "confirmed"
-    rejected: str = "rejected"
+    PENDING: str = "pending"
+    JUST_ADDED: str = "just_added"
+    CONFIRMED: str = "confirmed"
+    REJECTED: str = "rejected"
 
 
 ALL_USER_STATUSES = [i.value for i in UserStatus.__members__.values()]
 
 
 class UserType(str, Enum):
-    vendor: str = "vendor"
-    customer: str = "customer"
+    VENDOR: str = "vendor"
+    CUSTOMER: str = "customer"
 
 
 ALL_USER_TYPES = [i.value for i in UserType.__members__.values()]
 
 
 class GenderEnum(str, Enum):
-    female: str = "female"
-    male: str = "male"
-    other: str = "other"
+    FEMALE: str = "female"
+    MALE: str = "male"
+    OTHER: str = "other"
 
 
 ALL_GENDERS = [i.value for i in GenderEnum.__members__.values()]
 
 
 class AddressType(str, Enum):
-    work: str = "work"
-    home: str = "home"
+    WORK: str = "work"
+    HOME: str = "home"
 
 
 ALL_Address_Types = [i.value for i in AddressType.__members__.values()]
 
 
 class DefaultRoleNameEnum(str, Enum):
-    super_admin: str = "super_admin"
-    admin: str = "admin"
-    vendor: str = "vendor"
-    customer: str = "customer"
+    SUPER_ADMIN: str = "super_admin"
+    ADMIN: str = "admin"
+    VENDOR: str = "vendor"
+    CUSTOMER: str = "customer"
 
 
 ALL_ROLE_NAMES = [i.value for i in DefaultRoleNameEnum.__members__.values()]
 
 
 class DeviceType(str, Enum):
-    iOS = "ios"
-    android = "android"
-    web = "web"
-    other = "web"
+    IOS = "ios"
+    ANDROID = "android"
+    WEB = "web"
+    OTHER = "web"
 
 
 class DeviceMessageEnum(str, Enum):
-    add_new_device: str = _("Add new device")
+    ADD_NEW_DEVICE: str = _("Add new device")

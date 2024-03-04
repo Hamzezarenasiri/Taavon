@@ -44,10 +44,10 @@ class AddressSchemaOut(AddressSchema):
 
 
 class CreateUserRoleEnum(str, Enum):
-    super_admin: str = DefaultRoleNameEnum.super_admin.value
-    admin: str = DefaultRoleNameEnum.admin.value
-    vendor: str = DefaultRoleNameEnum.vendor.value
-    customer: str = DefaultRoleNameEnum.customer.value
+    SUPER_ADMIN: str = DefaultRoleNameEnum.SUPER_ADMIN.value
+    ADMIN: str = DefaultRoleNameEnum.ADMIN.value
+    VENDOR: str = DefaultRoleNameEnum.VENDOR.value
+    CUSTOMER: str = DefaultRoleNameEnum.CUSTOMER.value
 
 
 class BaseUserSchema(BaseSchema):
@@ -82,10 +82,11 @@ class UsersCreateOut(BaseUserSchema):
     # email_verified: Optional[bool]
     # gender: Optional[GenderEnum]
     # is_blocked: Optional[bool] = False
+    # user_status: Optional[UserStatus]
+    # is_force_change_password: Optional[bool]
+    # is_force_login: Optional[bool] = False
     first_name: Optional[str] = Field(example="John")
     id: SchemaID = Field(alias="id")
-    is_force_change_password: Optional[bool]
-    is_force_login: Optional[bool] = False
     last_name: Optional[str] = Field(example="Doe")
     national_code: IranNationalCodeStr
     permissions: Optional[List[PermissionModel]]
@@ -93,7 +94,6 @@ class UsersCreateOut(BaseUserSchema):
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
     settings: Optional[UserSettingsSchema]
     telephone: Optional[PhoneStr]
-    user_status: Optional[UserStatus]
 
 
 class UsersCreateIn(BaseUserSchema):
@@ -109,6 +109,7 @@ class UsersCreateIn(BaseUserSchema):
     #       country_code=app_settings.DEFAULT_COUNTRY_CODE,).dict()
     # telephone: Optional[PhoneStr]
     # is_blocked: Optional[bool] = False
+    # user_status: Optional[UserStatus]
     first_name: str = Field(example="John")
     last_name: str = Field(example="Doe")
     mobile_number: PhoneStr = Field(example="+989167076478")
@@ -117,7 +118,6 @@ class UsersCreateIn(BaseUserSchema):
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]] = []
-    user_status: Optional[UserStatus]
     user_type: Optional[UserType]
 
     @validator("organization_id")
@@ -151,17 +151,17 @@ class UserCreateSchemaOut(BaseUserSchema):
     # telephone: Optional[PhoneStr]
     # login_type: Optional[LoginType]
     # email_verified: Optional[bool]
+    # user_status: Optional[UserStatus]
 
     id: SchemaID = Field(alias="_id")
     first_name: Optional[str] = Field(example="John")
     last_name: Optional[str] = Field(example="Doe")
-    is_force_change_password: Optional[bool]
-    is_force_login: Optional[bool] = False
+    # is_force_change_password: Optional[bool]
+    # is_force_login: Optional[bool] = False
     national_code: Optional[IranNationalCodeStr]
     permissions: Optional[List[PermissionModel]]
-    user_status: Optional[UserStatus]
     roles: List[Optional[Union[str, CreateUserRoleEnum]]] = [
-        CreateUserRoleEnum.admin.value
+        CreateUserRoleEnum.ADMIN.value
     ]
     last_login_datetime: Optional[datetime]
     login_datetime: Optional[datetime]
@@ -191,7 +191,7 @@ class UsersGetUserSubListOut(BaseUserSchema):
     national_code: Optional[IranNationalCodeStr]
     organization_name: Optional[str]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]] = []
-    user_status: Optional[UserStatus]
+    # user_status: Optional[UserStatus]
     user_type: Optional[UserType]
     username: Optional[UsernameField]
 
@@ -210,20 +210,20 @@ class UsersUpdateIn(BaseSchema):
     # is_blocked: Optional[bool]
     # settings: Optional[UserSettingsSchema]
     # telephone: Optional[PhoneStr]
+    # is_force_change_password: Optional[bool]
+    # is_force_login: Optional[bool]
+    # organization_id: Optional[SchemaID] = None
+    # organization_name: Optional[str]
     first_name: Optional[str] = Field(example="John")
     is_enabled: Optional[bool]
-    is_force_change_password: Optional[bool]
-    is_force_login: Optional[bool]
     last_name: Optional[str] = Field(example="Doe")
     mobile_number: Optional[PhoneStr] = Field(example="+989167076478")
     national_code: Optional[IranNationalCodeStr]
     password: Optional[PasswordField]
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
-    organization_id: Optional[SchemaID] = None
-    organization_name: Optional[str]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]]
-    user_status: Optional[UserStatus]
+    # user_status: Optional[UserStatus]
     user_type: Optional[UserType]
     username: Optional[UsernameField]
 
@@ -240,14 +240,14 @@ class UsersUpdateAdminUserIn(BaseSchema):
     first_name: str = Field(example="John")
     roles: Optional[List[Union[str, CreateUserRoleEnum]]]
     is_enabled: Optional[bool]
-    is_force_change_password: Optional[bool]
-    is_force_login: Optional[bool]
+    # is_force_change_password: Optional[bool]
+    # is_force_login: Optional[bool]
     last_name: str = Field(example="Doe")
     national_code: Optional[IranNationalCodeStr]
     password: Optional[PasswordField]
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
-    user_status: Optional[UserStatus]
+    # user_status: Optional[UserStatus]
     user_type: Optional[UserType]
     username: Optional[UsernameField]
 
@@ -291,15 +291,15 @@ class ProfileGetMeAgg(BaseSchema):
     first_name: Optional[str] = Field(example="John")
     id: SchemaID = Field(alias="_id")
     is_enabled: Optional[bool]
-    is_force_change_password: Optional[bool] = Field(example=True)
-    is_force_login: Optional[bool] = Field(example=False)
+    # is_force_change_password: Optional[bool] = Field(example=True)
+    # is_force_login: Optional[bool] = Field(example=False)
     last_login_datetime: Optional[datetime]
     last_name: Optional[str] = Field(example="Doe")
     login_datetime: Optional[datetime]
     mobile_number: Optional[PhoneStr] = Field(example="+989167076478")
     national_code: Optional[IranNationalCodeStr] = Field(example="hNzrH4'7<-")
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
-    user_status: Optional[UserStatus]
+    # user_status: Optional[UserStatus]
     username: UsernameField
 
 

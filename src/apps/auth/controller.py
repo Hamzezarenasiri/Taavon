@@ -301,11 +301,11 @@ class AuthController(object):
                     password=password,
                     roles=[CreateUserRoleEnum.user.value],
                     avatar=avatar_url,
-                    user_status=UserStatus.just_added,
+                    user_status=UserStatus.JUST_ADDED,
                     addresses=[],
                     permissions=[],
                 ),
-                login_type=LoginType.social,
+                login_type=LoginType.SOCIAL,
                 email_verified=email_verified,
                 **kwargs,
             )
@@ -313,9 +313,9 @@ class AuthController(object):
             raise UserIsDisabled
         # if user.is_blocked:
         #     raise UserIsBlocked
-        # if user.user_status == UserStatus.pending:
+        # if user.user_status == UserStatus.PENDING:
         #     raise UserIsPending
-        # if user.user_status == UserStatus.rejected:
+        # if user.user_status == UserStatus.REJECTED:
         #     raise UserIsRejected
         new_doc = {
             "login_datetime": datetime.utcnow(),

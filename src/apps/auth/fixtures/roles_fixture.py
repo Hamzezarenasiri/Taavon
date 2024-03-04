@@ -5,6 +5,6 @@ from .permissions_fixture import (
 )
 
 all_roles = {
-    DefaultRoleNameEnum.super_admin: super_admin_permissions,
-    DefaultRoleNameEnum.admin: admin_permissions,
+    DefaultRoleNameEnum.SUPER_ADMIN: super_admin_permissions,
+    DefaultRoleNameEnum.ADMIN: admin_permissions,
 }
