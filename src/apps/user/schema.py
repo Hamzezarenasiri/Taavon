@@ -118,21 +118,21 @@ class UsersCreateIn(BaseUserSchema):
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]] = []
-    user_type: Optional[UserType]
+    # user_type: Optional[UserType]
 
-    @validator("organization_id")
-    @classmethod
-    def validate_organization_id(cls, value: SchemaID):
-        if not value:
-            return value
-        if global_services.SYNC_DB[Organization.get_collection_name()].find_one(
-            {"_id": value}
-        ):
-            return value
-        else:
-            raise ValueError(
-                User422MessageEnum.Invalid_organization_id_organization_not_found.value
-            )
+    # @validator("organization_id")
+    # @classmethod
+    # def validate_organization_id(cls, value: SchemaID):
+    #     if not value:
+    #         return value
+    #     if global_services.SYNC_DB[Organization.get_collection_name()].find_one(
+    #         {"_id": value}
+    #     ):
+    #         return value
+    #     else:
+    #         raise ValueError(
+    #             User422MessageEnum.Invalid_organization_id_organization_not_found.value
+    #         )
 
 
 class UserSocialCreateSchema(UsersCreateIn):
@@ -165,7 +165,7 @@ class UserCreateSchemaOut(BaseUserSchema):
     ]
     last_login_datetime: Optional[datetime]
     login_datetime: Optional[datetime]
-    user_type: Optional[UserType]
+    # user_type: Optional[UserType]
     phone_verified: Optional[bool]
 
 
@@ -192,7 +192,7 @@ class UsersGetUserSubListOut(BaseUserSchema):
     organization_name: Optional[str]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]] = []
     # user_status: Optional[UserStatus]
-    user_type: Optional[UserType]
+    # user_type: Optional[UserType]
     username: Optional[UsernameField]
 
 
@@ -224,7 +224,7 @@ class UsersUpdateIn(BaseSchema):
     phone_verified: Optional[bool]
     roles: Optional[List[Union[str, CreateUserRoleEnum]]]
     # user_status: Optional[UserStatus]
-    user_type: Optional[UserType]
+    # user_type: Optional[UserType]
     username: Optional[UsernameField]
 
 
@@ -248,7 +248,7 @@ class UsersUpdateAdminUserIn(BaseSchema):
     permissions: Optional[List[PermissionModel]]
     phone_verified: Optional[bool]
     # user_status: Optional[UserStatus]
-    user_type: Optional[UserType]
+    # user_type: Optional[UserType]
     username: Optional[UsernameField]
 
 
