@@ -55,7 +55,7 @@ class BaseUserSchema(BaseSchema):
     is_enabled: Optional[bool] = True
     last_name: Optional[str] = Field(example="Doe")
     mobile_number: Optional[PhoneStr] = Field(example="+989167076478")
-    organization_id: Optional[SchemaID] = None
+    # organization_id: Optional[SchemaID] = None
     roles: List[Optional[Union[str, CreateUserRoleEnum]]]
     username: UsernameField
     # email: Optional[EmailStr] = Field(example="user@example.com")
