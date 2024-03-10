@@ -102,6 +102,7 @@ class AppSettings(BaseSettings):
         "report",
         "user",
         "store",
+        "invoice",
     ]
 
 
@@ -126,6 +127,7 @@ class CollectionsNames(BaseSettings):
     CONFIG: str = "Config"
     ENTITY: str = "Entity"
     FILE: str = "File"
+    INVOICE: str = "Invoice"
     ROLE: str = "Role"
     LANGUAGE: str = "Language"
     LOG: str = "Log"
