@@ -57,7 +57,7 @@ class InvoiceCreateIn(InvoiceBaseSchema):
 
     @validator("store_id")
     @classmethod
-    def validate_user_id(cls, value: SchemaID):
+    def validate_store_id(cls, value: SchemaID):
         if not value:
             return value
         if global_services.SYNC_DB[Store.get_collection_name()].find_one(
