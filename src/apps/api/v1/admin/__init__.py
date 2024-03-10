@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 
+from .invoice import invoice_router
 from .product import product_router
 from .auth import admin_auth_router
 from .category import category_router
@@ -30,6 +31,7 @@ admin_router.include_router(city_router, prefix="/cities", tags=["Cities"])
 admin_router.include_router(dashboard_router, prefix="/dashboard", tags=["Dashboard"])
 admin_router.include_router(entity_router, prefix="/entities", tags=["Entities"])
 admin_router.include_router(file_router, prefix="/files", tags=["Files"])
+admin_router.include_router(invoice_router, prefix="/invoices", tags=["Invoices"])
 admin_router.include_router(
     profile_router, prefix="/me", tags=["Profile & Permissions"]
 )
