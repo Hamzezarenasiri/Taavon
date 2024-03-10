@@ -13,7 +13,7 @@ from fastapi import (
 from fastapi.responses import Response as StarletteResponse
 from persiantools.characters import ar_to_fa
 
-from apps.store.crud import store_crud
+from src.apps.store.crud import store_crud
 from src.apps.auth.deps import get_current_user
 from src.apps.invoice import schema as invoice_schema
 from src.apps.invoice.controller import invoice_controller
