@@ -222,8 +222,8 @@ class ShebaStr(str):
     def validate(cls, value):
         if not isinstance(value, str):
             raise ValueError("sheba must be a string")
-        if len(value) != 24:
-            raise ValueError("sheba must be 24 characters long")
+        if len(value) != 26:
+            raise ValueError("sheba must be 26 characters long")
         if not value.startswith("IR"):
             raise ValueError("sheba must start with IR")
         if not all(c.isalnum() for c in value[2:]):
