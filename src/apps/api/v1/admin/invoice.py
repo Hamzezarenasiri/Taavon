@@ -53,7 +53,7 @@ async def create_new_invoice(
     _: User = Security(get_current_user, scopes=[entity, "create"]),
 ):
     store = await store_crud.get_object(criteria={"_id": payload.store_id})
-    customer = users_crud.get_object(criteria={"_id": payload.customer_id})
+    customer = await users_crud.get_object(criteria={"_id": payload.customer_id})
     result_data = await invoice_controller.create_new_obj(
         new_data=payload, customer=customer, store=store
     )
