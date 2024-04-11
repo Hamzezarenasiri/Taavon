@@ -36,7 +36,7 @@ class InvoiceUserModel(BaseModel):
 
 class InvoiceStoreModel(BaseModel):
     name: str
-    store_id: str
+    store_id: DB_ID
 
     class Config:
         arbitrary_types_allowed = True
