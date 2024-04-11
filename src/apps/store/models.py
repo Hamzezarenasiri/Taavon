@@ -60,7 +60,6 @@ class Store(
     address: Optional[AddressModel]
     # email: Optional[EmailStr]
     image_url: Optional[str]
-    store_id: str
     phone: Optional[PhoneStr]
     postal_code: Optional[IranPostalCodeField]
     telephone: Optional[PhoneStr]
