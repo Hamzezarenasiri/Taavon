@@ -51,10 +51,8 @@ async def create_new_store(
     payload: store_schema.StoreCreateIn,
     _: User = Security(get_current_user, scopes=[entity, "create"]),
 ):
-    owner = users_crud.get_object(criteria={"_id": payload.owner_id})
-    result_data = await store_controller.create_new_obj(
-        new_data=payload, owner=owner.dict()
-    )
+    owner = await users_crud.get_object(criteria={"_id": payload.owner_id})
+    result_data = await store_controller.create_new_obj(new_data=payload, owner=owner)
     if result_data:
         result_data = await store_controller.get_single_store(
             target_store_id=result_data.id
