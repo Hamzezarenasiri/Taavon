@@ -30,7 +30,7 @@ class InvoiceUserSchema(BaseSchema):
 
 class InvoiceStoreSchema(BaseSchema):
     name: str
-    store_id: str
+    store_id: SchemaID
 
 
 class InvoiceBaseSchema(BaseSchema):
