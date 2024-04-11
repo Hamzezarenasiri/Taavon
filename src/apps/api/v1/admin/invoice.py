@@ -13,6 +13,7 @@ from fastapi import (
 from fastapi.responses import Response as StarletteResponse
 from persiantools.characters import ar_to_fa
 
+from apps.invoice.models import InvoiceUserModel, InvoiceStoreModel
 from src.apps.store.crud import store_crud
 from src.apps.auth.deps import get_current_user
 from src.apps.invoice import schema as invoice_schema
@@ -55,7 +56,9 @@ async def create_new_invoice(
     store = await store_crud.get_object(criteria={"_id": payload.store_id})
     customer = await users_crud.get_object(criteria={"_id": payload.customer_id})
     result_data = await invoice_controller.create_new_obj(
-        new_data=payload, customer=customer, store=store
+        new_data=payload,
+        customer=InvoiceUserModel(user_id=customer.id, **customer.dict()),
+        store=InvoiceStoreModel(store_id=store.id, **store.dict()),
     )
     if result_data:
         result_data = await invoice_controller.get_single_invoice(
