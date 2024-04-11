@@ -80,7 +80,9 @@ async def get_store_list(
     pagination: Pagination = Depends(),
     ordering: Ordering = Depends(Ordering()),
 ):
-    criteria = {"_id": current_user.store_id}
+    criteria = {
+        # "_id": current_user.store_id,
+    }
     if search:
         search = ar_to_fa(search)
         criteria["$or"] = [
@@ -136,9 +138,9 @@ async def get_all_store_without_pagination(
     search: Optional[str] = Query(None),
 ):
     criteria = {
-        "$or": [
-            {"_id": current_user.store_id},
-        ]
+        # "$or": [
+        #     {"_id": current_user.store_id},
+        # ]
     }
     if search:
         search = ar_to_fa(search)
