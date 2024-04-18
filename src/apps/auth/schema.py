@@ -1,20 +1,44 @@
-from typing import Optional, Union, List
+from datetime import datetime
+from typing import Optional, Union, List, Dict
 
 from pydantic import BaseModel, Field
 
-from src.apps.user.constants import GenderEnum
-from src.core.base.field import UsernameField, PasswordField, PhoneStr
+from src.apps.user.constants import GenderEnum, UserStatus
+from src.core.base.field import (
+    UsernameField,
+    PasswordField,
+    PhoneStr,
+    IranNationalCodeStr,
+)
 from src.core.base.schema import BaseSchema
 from src.core.mixins import DB_ID, ErrorMessage, Message
 from src.core.mixins.fields import OptionalEmailStr
 from src.core.mixins.models import UsernameSchema
 from src.main.config import app_settings
 from .constants import AuthErrorMessageEnum, AuthMessageEnum
+from ..user.schema import CreateUserRoleEnum
 
 
 class AuthToken(BaseModel):
     access_token: str
     refresh_token: str
+
+
+class AuthTokenAndProfile(AuthToken):
+    create_datetime: datetime
+    first_name: Optional[str] = Field(example="John")
+    is_enabled: Optional[bool]
+    is_force_change_password: Optional[bool] = Field(example=True)
+    is_force_login: Optional[bool] = Field(example=False)
+    last_login_datetime: Optional[datetime]
+    last_name: Optional[str] = Field(example="Doe")
+    login_datetime: Optional[datetime]
+    mobile_number: Optional[PhoneStr] = Field(example="+989167076478")
+    national_code: Optional[IranNationalCodeStr] = Field(example="hNzrH4'7<-")
+    roles: List[Optional[Union[str, CreateUserRoleEnum]]]
+    user_status: Optional[UserStatus]
+    username: UsernameField
+    permissions: Dict[str, List[str]]
 
 
 class AuthUsernamePasswordIn(BaseSchema):

@@ -11,7 +11,7 @@ from src.apps.auth.constants import (
 )
 from src.apps.auth.controller import auth_controller
 from src.apps.auth.deps import get_current_user, get_user_limited_token
-from src.apps.user.controller import user_controller
+from src.apps.user.controller import user_controller, profile_controller
 from src.apps.user.models import User
 from src.core.base.schema import Response, ErrorResponse
 from src.core.common.models.token import RefreshRequest
@@ -89,12 +89,27 @@ async def otp_request(
         **response_404,
         **response_500,
     },
-    response_model=Response[auth_schema.AuthToken],
+    response_model=Response[auth_schema.AuthTokenAndProfile],
 )
 @return_on_failure
 async def otp_verify(verification: auth_schema.AuthOTPVerifyIn):
-    result_data = await auth_controller.verify_otp(verification=verification)
-    return Response[auth_schema.AuthToken](data=result_data)
+    (
+        current_user,
+        tokens,
+    ) = await auth_controller.verify_otp_return_token_and_user(
+        verification=verification
+    )
+    profile = await profile_controller.get_my_profile(current_user=current_user)
+    profile.permissions = (
+        (await profile_controller.get_my_permissions_dict(current_user=current_user))
+        .dict()
+        .get("permissions")
+    )
+    result_data = auth_schema.AuthTokenAndProfile(
+        **profile.dict(),
+        **tokens.dict(),
+    )
+    return Response[auth_schema.AuthTokenAndProfile](data=result_data)
 
 
 @auth_router.post(

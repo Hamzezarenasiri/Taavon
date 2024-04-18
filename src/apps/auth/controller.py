@@ -1,7 +1,7 @@
 from datetime import datetime
 from datetime import timezone
 from pprint import pprint
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 import httpx
 from fastapi import BackgroundTasks
@@ -43,6 +43,38 @@ from ..user.exceptions import (
 
 
 class AuthController(object):
+    async def login_username_password_return_token_and_user(
+        self,
+        background_tasks: BackgroundTasks,
+        user_pass: AuthUsernamePasswordIn,
+    ):
+        user = await user_controller.authenticate_by_username_pass(
+            username=user_pass.username,
+            password=user_pass.password,
+        )
+        if not user:
+            raise user_exceptions.UserNotFound
+        if not user.is_enabled:
+            raise user_exceptions.UserIsDisabled
+        # if user.is_blocked:
+        #     raise user_exceptions.UserIsBlocked
+        # if user.email and not user.email_verified:
+        #     raise UserEmailNotVerified(data=dict(username=user.email))
+        # elif user.mobile_number and not user.phone_verified:
+        #     raise UserPhoneNotVerified(data=dict(username=user.mobile_number))
+        background_tasks.add_task(
+            func=users_crud.update,
+            criteria={"_id": user.id},
+            new_doc={
+                "login_datetime": datetime.now(timezone.utc),
+                "last_login_datetime": user.login_datetime,
+                "login_count": user.login_count + 1,
+                "is_force_login": False,
+            },
+            operator=UpdateOperatorsEnum.set_,
+        )
+        return user, await token.generate_token(str(user.id))
+
     async def login_username_password(
         self,
         background_tasks: BackgroundTasks,
@@ -202,6 +234,38 @@ class AuthController(object):
             operator=UpdateOperatorsEnum.set_,
         )
         return await token.generate_token(user.id)
+
+    @staticmethod
+    async def verify_otp_return_token_and_user(
+        verification: auth_schema.AuthOTPVerifyIn,
+    ) -> Tuple[User, auth_schema.AuthToken]:
+        user = await user_controller.get_single_obj(
+            mobile_number=verification.username["value"]
+        )
+
+        if not user:
+            raise user_exceptions.UserNotFound
+        if (
+            await otp.get_otp(key=verification.username.value)
+            != verification.verification_code
+        ):
+            raise OTPExpiredOrInvalid
+        new_doc = {
+            "login_datetime": datetime.now(timezone.utc),
+            "last_login_datetime": user.login_datetime,
+            "login_count": user.login_count + 1,
+            "is_force_login": False,
+        }
+        # if verification.username.value_type == USERNAME_IS_EMAIL:
+        #     new_doc["email_verified"] = True
+        # elif verification.username.value_type == USERNAME_IS_PHONE:
+        #     new_doc["phone_verified"] = True
+        await users_crud.update(
+            criteria={"_id": user.id},
+            new_doc=new_doc,
+            operator=UpdateOperatorsEnum.set_,
+        )
+        return user, await token.generate_token(user.id)
 
     @staticmethod
     async def limited_verify_otp(
