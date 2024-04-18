@@ -65,6 +65,7 @@ class Store(
     telephone: Optional[PhoneStr]
     text: Optional[str]
     name: str
+    guild: Optional[str]
     web_site: Optional[AnyUrl]
 
     class Config:
