@@ -26,19 +26,21 @@ admin_router = APIRouter()
 # admin_router.include_router(notification_router, prefix="/notifications")
 # admin_router.include_router(product_router, prefix="/products", tags=["Products"])
 # admin_router.include_router(report_router, prefix="/reports", tags=["Reports"])
-admin_router.include_router(admin_auth_router, prefix="/auth", tags=["Auth"])
-admin_router.include_router(city_router, prefix="/cities", tags=["Cities"])
-admin_router.include_router(dashboard_router, prefix="/dashboard", tags=["Dashboard"])
-admin_router.include_router(entity_router, prefix="/entities", tags=["Entities"])
-admin_router.include_router(file_router, prefix="/files", tags=["Files"])
-admin_router.include_router(invoice_router, prefix="/invoices", tags=["Invoices"])
+admin_router.include_router(admin_auth_router, prefix="/auth", tags=["Admin Auth"])
+admin_router.include_router(city_router, prefix="/cities", tags=["Admin Cities"])
 admin_router.include_router(
-    profile_router, prefix="/me", tags=["Profile & Permissions"]
+    dashboard_router, prefix="/dashboard", tags=["Admin Dashboard"]
+)
+admin_router.include_router(entity_router, prefix="/entities", tags=["Admin Entities"])
+admin_router.include_router(file_router, prefix="/files", tags=["Admin Files"])
+admin_router.include_router(invoice_router, prefix="/invoices", tags=["Admin Invoices"])
+admin_router.include_router(
+    profile_router, prefix="/me", tags=["Admin Profile & Permissions"]
 )
 # admin_router.include_router(
 #     organization_router, prefix="/organizations", tags=["Organizations"]
 # )
-admin_router.include_router(role_router, prefix="/roles", tags=["Roles"])
-admin_router.include_router(state_router, prefix="/states", tags=["States"])
-admin_router.include_router(store_router, prefix="/stores", tags=["Stores"])
-admin_router.include_router(user_router, prefix="/users", tags=["Users"])
+admin_router.include_router(role_router, prefix="/roles", tags=["Admin Roles"])
+admin_router.include_router(state_router, prefix="/states", tags=["Admin States"])
+admin_router.include_router(store_router, prefix="/stores", tags=["Admin Stores"])
+admin_router.include_router(user_router, prefix="/users", tags=["Admin Users"])
